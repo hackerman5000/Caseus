@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import random
 
-Client = discord.Client()  # Creates a new Discord clients.
+Client = discord.Client()  # Creates a new Discord client.
 prefix = 'c#'              # Use this to 'command' a bot.
 
 # Initiates the Bot class, Detailing the prefix.
