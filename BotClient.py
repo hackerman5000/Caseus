@@ -2,13 +2,16 @@ import discord
 from discord.ext import commands
 import random
 
-Client = discord.Client()
-prefix = 'c#'
+Client = discord.Client()  # Creates a new Discord clients.
+prefix = 'c#'              # Use this to 'command' a bot.
+
+# Initiates the Bot class, Detailing the prefix.
 bot = commands.Bot(command_prefix=prefix, description='Bonjour Monsieur / Madame.\n')
 
 
 @bot.event
 async def on_ready():
+    """On Startup, The Bot prints the following to the console."""
     print('HOHOHOHO LE BOT IS ONLINE!')
     print(bot.user.name)
     print('------')
