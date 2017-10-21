@@ -117,13 +117,22 @@ async def flip(ctx):
     await bot.say('Heads!') if random.randint(0, 1) == 1 else bot.say('Tails!')
     sleep(1)
 
+    
+
+@commands.has_permissions()
+@bot.command(pass_context=True)
+async def python(ctx):
+    """ Interprets Python Code and gets the result from repl.it/python3 """
+    await bot.say("***This has'nt been implemented yet and is still in EXTREMELY early WIP.***)
+                  
+               
 
 @bot.command(pass_context=True)
 async def lmgtfy(ctx, link):
     """ Let the bot google that for you...\nJust make sure to use quotes around multi-word searches."""
     link = urllib.parse.quote(link, safe='')
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
-    await bot.say("http://lmgtfy.com/?q={}".format(link))
+    await bot.say("```[One Freshly Baked Query:tm: comming right up!]http://lmgtfy.com/?q={}".format(link))
     sleep(1)
 
 
