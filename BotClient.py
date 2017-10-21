@@ -123,7 +123,7 @@ async def flip(ctx):
 @bot.command(pass_context=True)
 async def python(ctx):
     """ Interprets Python Code and gets the result from repl.it/python3 """
-    await bot.say("***This has'nt been implemented yet and is still in EXTREMELY early WIP.***)
+    await bot.say("***This has'nt been implemented yet and is still in EXTREMELY early WIP.***")
                   
                
 
