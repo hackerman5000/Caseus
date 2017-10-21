@@ -1,24 +1,30 @@
 import discord
 import random
 import urllib
+import os
+import sys
 from time import sleep
 from discord.ext import commands
 
-Client = discord.Client()  # Creates a new Discord clients.
+Client = discord.Client()  # Creates a new Discord client.
 prefix = 'c#'  # Use this to 'command' a bot.
-version = '1'.zfill(2)
+version = '1.5'
+bot_token = os.getenv('bot_token')
 
 '''
-TODO 
-- Implement more 'interactive' functions (c#cake, c#shit, c#liquidass).
+TODO    
 - Implement Voice/Music capabilities
+- Implement more 'interactive' functions (c#cake, c#shit, c#liquidass).
 '''
 
 # Initiates the Bot class, Detailing the prefix.
 bot = commands.Bot(command_prefix=prefix, description='Bonjour Monsieur / Madame.\n', pm_help=True)
 
+########################################################################################################################
+#                                                        STARTUP                                                       #
+########################################################################################################################
 
-#########################################################################################################
+
 @bot.event
 async def on_ready():
     """On Startup, The Bot prints the following to the console."""
@@ -29,15 +35,9 @@ async def on_ready():
     await bot.change_presence(game=discord.Game(name='Grating Cheese(c#help)'))
 
 
-@bot.command(pass_context=True, hidden=True)
-async def ver(ctx):
-    """ Print Version Control and Console """
-    global version
-    await bot.add_reaction(ctx.message, u"\U0001F9C0")
-    await bot.say("Hello World!\nCeaseus V{} reporting for duty...".format(version))
-
-
-#########################################################################################################
+########################################################################################################################
+#                                                    UTILITY//FUN                                                      #
+########################################################################################################################
 
 
 @bot.command(pass_context=True)
@@ -54,25 +54,25 @@ async def cheese(ctx, user_name: discord.User):
     if user_name.id == "369099294579359744":
         await bot.say("Thank you, {} for the :cheese:!".format(author_mention))
     else:
-        if user_name.id in usr_list:
+        if user_name.id in usr_list and user_name.id != author.id:
             target_mention = '<@{}>'.format(user_name.id)
             await bot.say('{0} has given {1} some :cheese:!'.format(author_mention, target_mention))
         else:
-            await bot.say("{}, You can't just give :cheese: to people who don't exist!".format(author_mention))
+            await bot.say("{}, You can't just give :cheese: to yourself!".format(author_mention))
 
 
-@bot.command(pass_context=True, description='For when you wanna settle the score some other way')
+@bot.command(pass_context=True)
 async def choose(ctx, *choices: str):
     """Chooses between multiple choices."""
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
     await bot.say(random.choice(choices))
 
 
+@commands.has_permissions()
 @bot.command(pass_context=True, hidden=True)
 async def clear(ctx, number):
     """ Clears chat log 'n' messages."""
-    if ctx.message.author.role is
-        mgs = []
+    mgs = []
     number = int(number)  # Converting the amount of messages to delete to an integer
     async for x in bot.logs_from(ctx.message.channel, limit=number):
         mgs.append(x)
@@ -89,12 +89,13 @@ async def connect(ctx):
     await bot.join_voice_channel(voice_channel)
 
 
+@commands.has_permissions()
 @bot.command(pass_context=True, hidden=True)
 async def crash(ctx):
-    """ Induces a crash [Only usable by NN/SC]. """
-    if ctx.message.author.id == "205633407093309440":
+    """ Induces a crash [Only usable by NN/SC & gum]. """
+    if ctx.message.author.id == "205633407093309440" or ctx.message.author.id == "281120477945266177":
         await bot.say("Goodbye Cruel World...")
-
+        sys.exit()
     else:
         await bot.say("You do not have permissions to make me crash.")
 
@@ -126,13 +127,15 @@ async def lmgtfy(ctx, link):
     sleep(1)
 
 
+@commands.has_permissions()
 @bot.command(pass_context=True, hidden=True)
 async def ping(ctx):
     """ Tests Bot Functionality """
     print("Pinged by..." + ctx.message.author.name)
     msg = ctx.message
+    author_mention = '<@{}>'.format(ctx.message.author.id)
     await bot.add_reaction(msg, u"\U0001F9C0")
-    await bot.say("Please...{} don't ping me ***that hard ***...".format(ctx.message.author.name))
+    await bot.say("{} Pong! :ping_pong:".format(author_mention))
     sleep(1)
 
 
@@ -165,4 +168,44 @@ async def pun(ctx):
     sleep(1)
 
 
-bot.run('TOKEN')
+@commands.has_permissions()
+@bot.command(pass_context=True, hidden=True)
+async def ver(ctx):
+    """ Print Version Control and Console """
+    global version
+    await bot.add_reaction(ctx.message, u"\U0001F9C0")
+    await bot.say("Hello World!\nCeaseus V{} reporting for duty...".format(version))
+
+
+@bot.command(pass_context=True)
+async def wine(ctx, user_name: discord.User):
+    """ Give someone a nice (non-alcoholic) glass of wine. """
+    try:
+        usr_list = []
+        author = ctx.message.author
+        author_mention = '<@{}>'.format(author.id)
+        await bot.add_reaction(ctx.message, u"\U0001F377")  # <-- Wine Emoji - UTF-8.
+
+        for member in ctx.message.server.members:
+            usr_list.append(member.id)
+
+    except:
+        await bot.say("{} you can't just give a glass of :wine_glass: to a non-existent person!".format(author_mention))
+
+    else:
+
+        if user_name.id == "369099294579359744":
+            await bot.say("Thanks for the :wine_glass:, {}!".format(author_mention))
+
+        else:
+            if user_name.id in usr_list and user_name.id != author.id:
+
+                from WineRecords import main
+                target_mention = '<@{}>'.format(user_name.id)
+                await bot.say('{0} has given {1} a glass of :wine_glass:!'.format(author_mention, target_mention))
+                await bot.say(main(user_name.id))
+
+            else:
+                await bot.say("{}, You can't just give :wine_glass: to yourself!".format(author_mention))
+
+bot.run(bot_token)
