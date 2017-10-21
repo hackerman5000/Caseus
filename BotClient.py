@@ -32,7 +32,7 @@ async def on_ready():
     print("Name: {}".format(bot.user.name))
     print("Version: {}".format(version))
     print("ID: {}".format(bot.user.id))
-    await bot.change_presence(game=discord.Game(name='Grating Cheese(c#help)'))
+    await bot.change_presence(game=discord.Game(name="Grating Cheese"))
 
 
 ########################################################################################################################
