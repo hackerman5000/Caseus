@@ -6,12 +6,12 @@ import sys
 from time import sleep
 from discord.ext import commands
 
-
-# Initiates the Bot class, Detailing the prefix.
-bot = commands.Bot(command_prefix=prefix, description='Bonjour Monsieur / Madame.\n', pm_help=True)
 prefix = 'c#'  # Use this to 'command' a bot.
 version = '1.5'
 bot_token = os.getenv('bot_token')
+
+# Initiates the Bot class, Detailing the prefix.
+bot = commands.Bot(command_prefix=prefix, description='Bonjour Monsieur / Madame.\n', pm_help=True)
 
 '''
 TODO    
