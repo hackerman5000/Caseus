@@ -66,10 +66,8 @@ async def choose(ctx, *choices: str):
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
     await bot.say(random.choice(choices))
 
-# Initiates the Bot class, Detailing the prefix.
-bot = commands.Bot(command_prefix=prefix, description='Bonjour Monsieur / Madame.\n', pm_help=True)
-clien
-
+    
+    
 @commands.has_permissions()
 @bot.command(pass_context=True, hidden=True)
 async def clear(ctx, number):
