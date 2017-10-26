@@ -6,7 +6,9 @@ import sys
 from time import sleep
 from discord.ext import commands
 
-Client = discord.Client()  # Creates a new Discord client.
+
+# Initiates the Bot class, Detailing the prefix.
+bot = commands.Bot(command_prefix=prefix, description='Bonjour Monsieur / Madame.\n', pm_help=True)
 prefix = 'c#'  # Use this to 'command' a bot.
 version = '1.5'
 bot_token = os.getenv('bot_token')
@@ -16,9 +18,6 @@ TODO
 - Implement Voice/Music capabilities
 - Implement more 'interactive' functions (c#cake, c#shit, c#liquidass).
 '''
-
-# Initiates the Bot class, Detailing the prefix.
-bot = commands.Bot(command_prefix=prefix, description='Bonjour Monsieur / Madame.\n', pm_help=True)
 
 ########################################################################################################################
 #                                                        STARTUP                                                       #
@@ -67,6 +66,9 @@ async def choose(ctx, *choices: str):
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
     await bot.say(random.choice(choices))
 
+# Initiates the Bot class, Detailing the prefix.
+bot = commands.Bot(command_prefix=prefix, description='Bonjour Monsieur / Madame.\n', pm_help=True)
+clien
 
 @commands.has_permissions()
 @bot.command(pass_context=True, hidden=True)
