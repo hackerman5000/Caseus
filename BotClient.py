@@ -185,36 +185,40 @@ async def ver(ctx):
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
     await bot.say("Hello World!\nCeaseus V{} reporting for duty...".format(version))
 
-
 @bot.command(pass_context=True)
 async def wine(ctx, user_name: discord.User):
     """ Give someone a nice (non-alcoholic) glass of wine. """
-    try:
-        usr_list = []
-        author = ctx.message.author
-        author_mention = '<@{}>'.format(author.id)
-        await bot.add_reaction(ctx.message, u"\U0001F377")  # <-- Wine Emoji - UTF-8.
+    title = ctx.message.content
+    description = ""
+    footer = ""
 
-        for member in ctx.message.server.members:
-            usr_list.append(member.id)
+    usr_list = []
+    author = ctx.message.author
+    author_mention = '<@{}>'.format(author.id)
+    await bot.add_reaction(ctx.message, u"\U0001F377")  # <-- Wine Emoji - UTF-8.
 
-    except:
-        await bot.say("{} you can't just give a glass of :wine_glass: to a non-existent person!".format(author_mention))
+    for member in ctx.message.server.members:
+        usr_list.append(member.id)
 
     else:
-
         if user_name.id == "369099294579359744":
-            await bot.say("Thanks for the :wine_glass:, {}!".format(author_mention))
+            description = "Thanks for the :wine_glass:, {}!".format(author_mention)
 
         else:
             if user_name.id in usr_list and user_name.id != author.id:
 
                 from WineRecords import main
                 target_mention = '<@{}>'.format(user_name.id)
-                await bot.say('{0} has given {1} a glass of :wine_glass:!'.format(author_mention, target_mention))
-                await bot.say(main(user_name.id))
+                description = '{0} has given {1} a glass of :wine_glass:!'.format(author_mention, target_mention)
+                footer = main(user_name.id)
 
             else:
-                await bot.say("{}, You can't just give :wine_glass: to yourself!".format(author_mention))
+                description = "{}, You can't just give :wine_glass: to yourself!".format(author_mention)
+
+        embed = discord.Embed(title=title,
+                              description=description,
+                              color=0xff8040)
+        embed.set_footer(text=footer)
+        await bot.say(embed=embed)
 
 bot.run(bot_token)
