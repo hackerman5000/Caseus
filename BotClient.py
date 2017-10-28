@@ -207,7 +207,6 @@ async def wine(ctx, user_name: discord.User):
 
         else:
             if user_name.id in usr_list and user_name.id != author.id:
-
                 from WineRecords import main
                 target_mention = user_name.mention
                 description = '{0} has given {1} a glass of :wine_glass:!'.format(author_mention, target_mention)
