@@ -188,6 +188,7 @@ async def ver(ctx):
 @bot.command(pass_context=True)
 async def wine(ctx, user_name: discord.User):
     """ Give someone a nice (non-alcoholic) glass of wine. """
+    from discord import Embed as Em
     title = ctx.message.content
     description = ""
     footer = ""
@@ -215,10 +216,8 @@ async def wine(ctx, user_name: discord.User):
             else:
                 description = "{}, You can't just give :wine_glass: to yourself!".format(author_mention)
 
-        embed = discord.Embed(title=title,
-                              description=description,
-                              color=0xff8040)
+        embed = Em(title=title, decsription=description, color=0xff8040)
         embed.set_footer(text=footer)
-        await bot.say("Something", embed=embed)
+        await bot.say(embed=embed)
 
 bot.run(bot_token)
