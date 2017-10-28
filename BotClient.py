@@ -215,7 +215,7 @@ async def wine(ctx, user_name: discord.User):
             else:
                 description = "***{}, You can't just give :wine_glass: to yourself!***".format(author_mention)
 
-        embed = discord.Embed(title="Wine!", description=description + "\n" + footer,color = 0xff8040)
+        embed = discord.Embed(description=description + "\n" + footer,color = 0xff8040)
         embed.set_author(name="Caseus",
                          icon_url=r"https://cdn.discordapp.com/app-icons/" +
                                   r"369099294579359744/85818996c0ccfd1030b096f4c3dcf23f.png")
