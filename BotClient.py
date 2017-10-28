@@ -132,7 +132,7 @@ async def lmgtfy(ctx, link):
     """ Let the bot google that for you...\nJust make sure to use quotes around multi-word searches."""
     link = urllib.parse.quote(link, safe='')
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
-    await bot.say("```[One Freshly Baked Query:tm: comming right up!]http://lmgtfy.com/?q={}".format(link))
+    await bot.say("```[One Freshly Baked Query:tm: comming right up!]```http://lmgtfy.com/?q={}".format(link))
     sleep(1)
 
 
@@ -203,17 +203,17 @@ async def wine(ctx, user_name: discord.User):
 
     else:
         if user_name.id == "369099294579359744":
-            description = "Thanks for the :wine_glass:, {}!".format(author_mention)
+            description = "***Thanks for the :wine_glass:, {}!***".format(author_mention)
 
         else:
             if user_name.id in usr_list and user_name.id != author.id:
                 from WineRecords import main
                 target_mention = user_name.mention
-                description = '{0} has given {1} a glass of :wine_glass:!'.format(author_mention, target_mention)
+                description = '***{0} has given {1} a glass of :wine_glass:!***'.format(author_mention, target_mention)
                 footer = main(user_name.id)
 
             else:
-                description = "{}, You can't just give :wine_glass: to yourself!".format(author_mention)
+                description = "***{}, You can't just give :wine_glass: to yourself!***".format(author_mention)
 
         embed = discord.Embed(title="Wine!", description=description + "\n" + footer,color = 0xff8040)
         embed.set_author(name="Caseus",
