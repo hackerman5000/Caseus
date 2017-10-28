@@ -21,4 +21,4 @@ def main(UID):
 
     cur.execute("SELECT * FROM USERS WHERE ID = {}".format(UID))
     vals = cur.fetchall()[0]
-    return "***<@{0}> has been given {1} glasses of :wine_glass:!***".format(vals[0], (vals[1]+1))
+    return "*<@{0}> has been given {1} glasses of :wine_glass:!*".format(vals[0], (vals[1]+1))
