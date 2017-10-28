@@ -185,7 +185,6 @@ async def ver(ctx):
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
     await bot.say("Hello World!\nCeaseus V{} reporting for duty...".format(version))
 
-
 @bot.command(pass_context=True)
 async def wine(ctx, user_name: discord.User):
     """ Give someone a nice (non-alcoholic) glass of wine. """
@@ -196,7 +195,7 @@ async def wine(ctx, user_name: discord.User):
 
     usr_list = []
     author = ctx.message.author
-    author_mention = '<@{}>'.format(author.id)
+    author_mention = ctx.message.author.mention
     await bot.add_reaction(ctx.message, u"\U0001F377")  # <-- Wine Emoji - UTF-8.
 
     for member in ctx.message.server.members:
@@ -210,15 +209,19 @@ async def wine(ctx, user_name: discord.User):
             if user_name.id in usr_list and user_name.id != author.id:
 
                 from WineRecords import main
-                target_mention = '<@{}>'.format(user_name.id)
-                description = '@{0} has given @{1} a glass of :wine_glass:!'.format(author_mention, target_mention)
+                target_mention = user_name.mention
+                description = '{0} has given {1} a glass of :wine_glass:!'.format(author_mention, target_mention)
                 footer = main(user_name.id)
 
             else:
-                description = "@{}, You can't just give :wine_glass: to yourself!".format(author_mention)
+                description = "{}, You can't just give :wine_glass: to yourself!".format(author_mention)
 
-        embed = Embed(title=title, decsription=description, color=0xff8040)
+        embed = discord.Embed(title="Wine!", decsription = description, color = 0xff8040)
+        embed.set_author(name="Caseus",
+                         icon_url=r"https://cdn.discordapp.com/app-icons/" +
+                                  r"369099294579359744/85818996c0ccfd1030b096f4c3dcf23f.png")
         embed.set_footer(text=footer)
         await bot.say(embed=embed)
+
 
 bot.run(bot_token)
