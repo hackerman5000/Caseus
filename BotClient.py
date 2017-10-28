@@ -7,7 +7,7 @@ from time import sleep
 from discord.ext import commands
 
 prefix = 'c#'  # Use this to 'command' a bot.
-version = '1.5'
+version = '1.75.1'
 bot_token = os.getenv('bot_token')
 
 # Initiates the Bot class, Detailing the prefix.
@@ -41,12 +41,15 @@ async def on_ready():
 def EmbGen(title=None, description=None, footer=None, author=None, *fields, color=0xff8040):
     """This Function will be used to generate embeds on the go, For any command to use if needed."""
     url = r"https://cdn.discordapp.com/app-icons/369099294579359744/85818996c0ccfd1030b096f4c3dcf23f.png"
-    embed=discord.Embed(title=title, description=description, color=color)
+    embed=discord.Embed(title=title if not None else "",
+                        description=description if not None else "",
+                        color=color)
 
-    embed.set_author(
-        name="Caseus",
-        icon_url=url
-    )
+    if author is not None:
+        embed.set_author(
+            name=author,
+            icon_url=url
+        )
 
     if fields is not None:
         for name, value in fields:
@@ -74,13 +77,13 @@ async def cheese(ctx, user_name: discord.User):
         usr_list.append(member.id)
 
     if user_name.id == "369099294579359744":
-        description = ("Thank you, {} for the :cheese:!".format(author_mention))
+        description = ("***Thank you, {} for the :cheese:!***".format(author_mention))
     else:
         if user_name.id in usr_list and user_name.id != author.id:
             target_mention = '<@{}>'.format(user_name.id)
-            description = '{0} has given {1} some :cheese:!'.format(author_mention, target_mention)
+            description = '***{0} has given {1} some :cheese:!***'.format(author_mention, target_mention)
         else:
-            description = "{}, You can't just give :cheese: to yourself!".format(author_mention)
+            description = "***{}, You can't just give :cheese: to yourself!***".format(author_mention)
     await bot.say(embed=EmbGen(title="Cheese!", description=description))
 
 
@@ -88,7 +91,7 @@ async def cheese(ctx, user_name: discord.User):
 async def choose(ctx, *choices: str):
     """Chooses between multiple choices."""
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
-    await bot.say(random.choice(choices))
+    await bot.say(embed=EmbGen(title="I Choose...", description=random.choice(choices).title()))
 
     
     
@@ -137,8 +140,7 @@ async def flip(ctx):
     """ Flips a coin! """
     print("Flipping Coin...")
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
-    await bot.say("Flipping Coin...")
-    await bot.say('Heads!') if random.randint(0, 1) == 1 else bot.say('Tails!')
+    await bot.say(embed=EmbGen(title="Flipping Coin...", description = "Heads!" if random.randint(0, 1) == 1 else "Tails!"
     sleep(1)
 
     
@@ -156,9 +158,9 @@ async def lmgtfy(ctx, link):
     """ Let the bot google that for you...\nJust make sure to use quotes around multi-word searches."""
     link = urllib.parse.quote(link, safe='')
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
-    await bot.say("```[One Freshly Baked Query:tm: comming right up!]```http://lmgtfy.com/?q={}".format(link))
-    sleep(1)
+    await bot.say(embed="One Freshly Baked Query(TM) coming right up!", description = "http://lmgtfy.com/?q={}".format(link))
 
+                               
 
 @commands.has_permissions()
 @bot.command(pass_context=True, hidden=True)
@@ -171,6 +173,7 @@ async def ping(ctx):
     await bot.say("{} Pong! :ping_pong:".format(author_mention))
     sleep(1)
 
+                               
 
 @bot.command(pass_context=True)
 async def pun(ctx):
@@ -196,10 +199,11 @@ async def pun(ctx):
         "What's a cannibal's favorite cheese?\nLimburget!"
     ]
     print("Saying Pun...")
+    pun = cheese_puns[random.randint(0, len(cheese_puns) - 1)].split("\n") # Use [0] for Pun and [-1] for answer
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
-    await bot.say(cheese_puns[random.randint(0, len(cheese_puns) - 1)])
-    sleep(1)
+    await bot.say(embed=EmbGen(title=pun[0], description="***{}***".format(pun[-1])
 
+                               
 
 @commands.has_permissions()
 @bot.command(pass_context=True, hidden=True)
@@ -209,6 +213,8 @@ async def ver(ctx):
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
     await bot.say("Hello World!\nCeaseus V{} reporting for duty...".format(version))
 
+                               
+                               
 @bot.command(pass_context=True)
 async def wine(ctx, user_name: discord.User):
     """ Give someone a nice (non-alcoholic) glass of wine. """
@@ -238,12 +244,8 @@ async def wine(ctx, user_name: discord.User):
 
             else:
                 description = "***{}, You can't just give :wine_glass: to yourself!***".format(author_mention)
+        await bot.say(embed=EmbGen(description=description + "\n" + footer))
 
-        embed = discord.Embed(description=description + "\n" + footer,color = 0xff8040)
-        embed.set_author(name="Caseus",
-                         icon_url=r"https://cdn.discordapp.com/app-icons/" +
-                                  r"369099294579359744/85818996c0ccfd1030b096f4c3dcf23f.png")
-        await bot.say(embed=embed)
-
+ 
 
 bot.run(bot_token)
