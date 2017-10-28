@@ -19,6 +19,7 @@ TODO
 - Implement more 'interactive' functions (c#cake, c#shit, c#liquidass).
 '''
 
+
 ########################################################################################################################
 #                                                        STARTUP                                                       #
 ########################################################################################################################
@@ -41,9 +42,9 @@ async def on_ready():
 def EmbGen(title=None, description=None, footer=None, author=None, *fields, color=0xff8040):
     """This Function will be used to generate embeds on the go, For any command to use if needed."""
     url = r"https://cdn.discordapp.com/app-icons/369099294579359744/85818996c0ccfd1030b096f4c3dcf23f.png"
-    embed=discord.Embed(title=title if not None else "",
-                        description=description if not None else "",
-                        color=color)
+    embed = discord.Embed(title=title if not None else "",
+                          description=description if not None else "",
+                          color=color)
 
     if author is not None:
         embed.set_author(
@@ -59,7 +60,8 @@ def EmbGen(title=None, description=None, footer=None, author=None, *fields, colo
         embed.set_footer(text=footer)
 
     return embed
-    
+
+
 ########################################################################################################################
 #                                                   COMMANDS                                                           #
 ########################################################################################################################
@@ -93,8 +95,7 @@ async def choose(ctx, *choices: str):
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
     await bot.say(embed=EmbGen(title="I Choose...", description=random.choice(choices).title()))
 
-    
-    
+
 @commands.has_permissions()
 @bot.command(pass_context=True, hidden=True)
 async def clear(ctx, number):
@@ -140,27 +141,26 @@ async def flip(ctx):
     """ Flips a coin! """
     print("Flipping Coin...")
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
-    await bot.say(embed=EmbGen(title="Flipping Coin...", description = "Heads!" if random.randint(0, 1) == 1 else "Tails!"
+    await bot.say(embed=EmbGen(title="Flipping Coin...",
+                               description="Heads!" if random.randint(0, 1) == 1 else "Tails!"))
     sleep(1)
 
-    
 
 @commands.has_permissions()
 @bot.command(pass_context=True)
 async def python(ctx):
     """ Interprets Python Code and gets the result from repl.it/python3 """
     await bot.say("***This has'nt been implemented yet and is still in EXTREMELY early WIP.***")
-                  
-               
+
 
 @bot.command(pass_context=True)
 async def lmgtfy(ctx, link):
     """ Let the bot google that for you...\nJust make sure to use quotes around multi-word searches."""
     link = urllib.parse.quote(link, safe='')
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
-    await bot.say(embed="One Freshly Baked Query(TM) coming right up!", description = "http://lmgtfy.com/?q={}".format(link))
+    await bot.say(embed="One Freshly Baked Query(TM) coming right up!",
+                  description="http://lmgtfy.com/?q={}".format(link))
 
-                               
 
 @commands.has_permissions()
 @bot.command(pass_context=True, hidden=True)
@@ -170,40 +170,38 @@ async def ping(ctx):
     msg = ctx.message
     author_mention = '<@{}>'.format(ctx.message.author.id)
     await bot.add_reaction(msg, u"\U0001F9C0")
-    await bot.say("{} Pong! :ping_pong:".format(author_mention))
+    await bot.say(embed=EmbGen(title="Pong!", description=":ping_pong:!"))
     sleep(1)
 
-                               
 
 @bot.command(pass_context=True)
 async def pun(ctx):
     """ Produces 'freshly' fermented Cheese Puns."""
     cheese_puns = [
-        "What does cheese say when it looks in the mirror?\nHalloumi!",
-        "What cheese can be used to encourage a bear?\nCamembert!",
-        "What cheese has a bit of an alcohol problem?\nLivarot!",
-        "What cheese can be used to hide a horse?\nMascsarpone!",
-        "What cheese do you need to be very cautious with?\nCaerphilly!",
-        "What cheese can fly?\nCurds of Prey!",
-        "What's the most religious cheese?\nEmmental!",
-        "What hotel does cheese stay at?\nThe Stilton!",
-        "What's the saddest cheese?\nBlue Cheese!",
-        "What does cheese like to drink?\nMorbier!",
-        "What search engine does cheese use?\nAsk Cheese!",
-        "What do you call cheese that is'nt yours?\nNacho Cheese!"
-        "What genre of music does cheese listen to?\nR & Brie!",
-        "What's a beaver's favorite cheese?\nEdam!",
-        "What happens when cheese gets ill?\nIt gets Feta!",
-        "What does cheese build when it goes to the beach?\nA Roquefort!",
-        "What's the last piece of cheese left?\nForever Provolone!",
-        "What's a cannibal's favorite cheese?\nLimburget!"
-    ]
+            "What does cheese say when it looks in the mirror?\nHalloumi!",
+            "What cheese can be used to encourage a bear?\nCamembert!",
+            "What cheese has a bit of an alcohol problem?\nLivarot!",
+            "What cheese can be used to hide a horse?\nMascsarpone!",
+            "What cheese do you need to be very cautious with?\nCaerphilly!",
+            "What cheese can fly?\nCurds of Prey!",
+            "What's the most religious cheese?\nEmmental!",
+            "What hotel does cheese stay at?\nThe Stilton!",
+            "What's the saddest cheese?\nBlue Cheese!",
+            "What does cheese like to drink?\nMorbier!",
+            "What search engine does cheese use?\nAsk Cheese!",
+            "What do you call cheese that is'nt yours?\nNacho Cheese!"
+            "What genre of music does cheese listen to?\nR & Brie!",
+            "What's a beaver's favorite cheese?\nEdam!",
+            "What happens when cheese gets ill?\nIt gets Feta!",
+            "What does cheese build when it goes to the beach?\nA Roquefort!",
+            "What's the last piece of cheese left?\nForever Provolone!",
+            "What's a cannibal's favorite cheese?\nLimburget!"
+        ]
     print("Saying Pun...")
-    pun = cheese_puns[random.randint(0, len(cheese_puns) - 1)].split("\n") # Use [0] for Pun and [-1] for answer
+    r_pun = cheese_puns[random.randint(0, len(cheese_puns) - 1)].split("\n")  # Use [0] for Pun and [-1] for answer
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
-    await bot.say(embed=EmbGen(title=pun[0], description="***{}***".format(pun[-1])
+    await bot.say(embed=EmbGen(title=r_pun[0], description="***{}***".format(r_pun[-1])))
 
-                               
 
 @commands.has_permissions()
 @bot.command(pass_context=True, hidden=True)
@@ -211,18 +209,14 @@ async def ver(ctx):
     """ Print Version Control and Console """
     global version
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
-    await bot.say("Hello World!\nCeaseus V{} reporting for duty...".format(version))
+    await bot.say(embed=EmbGen(title="Hello World!",
+                               description="***Caseus v{} reporting for duty!***".format(version)))
 
-                               
-                               
+
 @bot.command(pass_context=True)
 async def wine(ctx, user_name: discord.User):
     """ Give someone a nice (non-alcoholic) glass of wine. """
-    from discord import Embed
-    title = ctx.message.content
-    description = ""
     footer = ""
-
     usr_list = []
     author = ctx.message.author
     author_mention = ctx.message.author.mention
@@ -230,7 +224,6 @@ async def wine(ctx, user_name: discord.User):
 
     for member in ctx.message.server.members:
         usr_list.append(member.id)
-
     else:
         if user_name.id == "369099294579359744":
             description = "***Thanks for the :wine_glass:, {}!***".format(author_mention)
@@ -245,7 +238,5 @@ async def wine(ctx, user_name: discord.User):
             else:
                 description = "***{}, You can't just give :wine_glass: to yourself!***".format(author_mention)
         await bot.say(embed=EmbGen(description=description + "\n" + footer))
-
- 
 
 bot.run(bot_token)
