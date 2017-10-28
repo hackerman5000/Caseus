@@ -219,6 +219,6 @@ async def wine(ctx, user_name: discord.User):
                               description=description,
                               color=0xff8040)
         embed.set_footer(text=footer)
-        await bot.say(embed=embed)
+        await bot.say("Something", embed=embed)
 
 bot.run(bot_token)
