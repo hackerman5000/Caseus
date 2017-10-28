@@ -158,8 +158,12 @@ async def lmgtfy(ctx, link):
     """ Let the bot google that for you...\nJust make sure to use quotes around multi-word searches."""
     link = urllib.parse.quote(link, safe='')
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
-    await bot.say(embed="One Freshly Baked Query(TM) coming right up!",
-                  description="http://lmgtfy.com/?q={}".format(link))
+    await bot.say(embed=EmbGen(
+                title="One Freshly Baked Query(TM) coming right up!",
+                description="http://lmgtfy.com/?q={}".format(link)
+                              )
+    )
+    
 
 
 @commands.has_permissions()
