@@ -44,7 +44,7 @@ def EmbGen(title=None, description=None, footer=None, author=None, *fields, colo
     embed=discord.Embed(title=title, description=description, color=color)
 
     embed.set_author(
-        name=author,
+        name="Caseus",
         icon_url=url
     )
 
@@ -74,13 +74,14 @@ async def cheese(ctx, user_name: discord.User):
         usr_list.append(member.id)
 
     if user_name.id == "369099294579359744":
-        await bot.say("Thank you, {} for the :cheese:!".format(author_mention))
+        description = ("Thank you, {} for the :cheese:!".format(author_mention))
     else:
         if user_name.id in usr_list and user_name.id != author.id:
             target_mention = '<@{}>'.format(user_name.id)
-            await bot.say('{0} has given {1} some :cheese:!'.format(author_mention, target_mention))
+            description = '{0} has given {1} some :cheese:!'.format(author_mention, target_mention)
         else:
-            await bot.say("{}, You can't just give :cheese: to yourself!".format(author_mention))
+            description = "{}, You can't just give :cheese: to yourself!".format(author_mention)
+    await bot.say(embed=EmbGen(title="Cheese!", description=description))
 
 
 @bot.command(pass_context=True)
