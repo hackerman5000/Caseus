@@ -185,10 +185,11 @@ async def ver(ctx):
     await bot.add_reaction(ctx.message, u"\U0001F9C0")
     await bot.say("Hello World!\nCeaseus V{} reporting for duty...".format(version))
 
+
 @bot.command(pass_context=True)
 async def wine(ctx, user_name: discord.User):
     """ Give someone a nice (non-alcoholic) glass of wine. """
-    from discord import Embed as Em
+    from discord import Embed
     title = ctx.message.content
     description = ""
     footer = ""
@@ -210,13 +211,13 @@ async def wine(ctx, user_name: discord.User):
 
                 from WineRecords import main
                 target_mention = '<@{}>'.format(user_name.id)
-                description = '{0} has given {1} a glass of :wine_glass:!'.format(author_mention, target_mention)
+                description = '@{0} has given @{1} a glass of :wine_glass:!'.format(author_mention, target_mention)
                 footer = main(user_name.id)
 
             else:
-                description = "{}, You can't just give :wine_glass: to yourself!".format(author_mention)
+                description = "@{}, You can't just give :wine_glass: to yourself!".format(author_mention)
 
-        embed = Em(title=title, decsription=description, color=0xff8040)
+        embed = Embed(title=title, decsription=description, color=0xff8040)
         embed.set_footer(text=footer)
         await bot.say(embed=embed)
 
