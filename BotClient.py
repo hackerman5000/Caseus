@@ -9,7 +9,7 @@ bot_token = os.getenv('bot_token')
 # Initiates the Bot class, Detailing the prefix.
 bot = commands.Bot(command_prefix=prefix, description='Bonjour Monsieur / Madame.\n', pm_help=True)
 # These are the extensions (cogs).
-Extensions = ["AdminCommands", "CheeseAndWine", "VCAndMusic"]
+Extensions = ["adminCommands", "cheeseAndWine", "vcAndMusic"]
 
 
 ########################################################################################################################
