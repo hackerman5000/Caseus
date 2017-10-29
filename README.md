@@ -1,4 +1,4 @@
-**__Caseus__**
+**__Caseus__**\n
 _A Cheesey bot made for a private Discord Server_
 
 Caseus is a small scaled bot used for a private server I run...Not much else to say.
