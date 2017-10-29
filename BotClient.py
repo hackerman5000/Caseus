@@ -38,8 +38,7 @@ async def on_ready():
 @bot.event
 async def on_command_error(ctx, error):
     """When an Error is raised, The Bot prints and Informs the following to the console."""
-    await bot.say(embed=EmbGen(title="Error!", description="{} has resulted in {}".format(ctx.message.content, error)))
-
+    await bot.say(embed=EmbGen(title="Error!", description="{} has resulted in {}".format(ctx, type(ctx))))
     
 @bot.command()
 async def load(extension_name: str):
