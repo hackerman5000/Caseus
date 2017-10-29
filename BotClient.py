@@ -1,5 +1,6 @@
 import os
 import discord
+from HelperFunctions.EmbedGenerator import EmbGen
 from discord.ext import commands
 
 prefix = 'c#'  # Use this to 'command' a bot.
