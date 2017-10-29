@@ -7,7 +7,14 @@ version = '1.75.1'
 bot_token = os.getenv('bot_token')
 
 # Initiates the Bot class, Detailing the prefix.
-bot = commands.Bot(command_prefix=prefix, description='Bonjour Monsieur / Madame.\n', pm_help=True)
+# Initiates the Bot class, Detailing the prefix.
+bot = commands.Bot(command_prefix=prefix,
+                   description='Bonjour Monsieur / Madame.\n',
+                   pm_help=None,
+                   command_not_found=EmbGen(title="Command not found!",
+                                            description="That command does not exist, Try again!"),
+                   owner_id="205633407093309440"
+        )
 # These are the extensions (cogs).
 Extensions = ["Cogs.adminCommands", "Cogs.cheeseAndWine", "Cogs.vcAndMusic"]
 
