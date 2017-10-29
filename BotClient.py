@@ -31,9 +31,15 @@ async def on_ready():
     print("Name: {}".format(bot.user.name))
     print("Version: {}".format(version))
     print("ID: {}".format(bot.user.id))
-    await bot.change_presence(game=discord.Game(name="Grating Cheese"))
+    await bot.change_presence(game=discord.Game(name="Grating Cheese(c#help)"))
 
+    
+@bot.event
+async def on_command_error(ctx, error):
+    """When an Error is raised, The Bot prints and Informs the following to the console."""
+    await bot.say(embed=EmbGen(title="Error!", description="{} has resulted in {}".format(ctx.message.content, error)))
 
+    
 @bot.command()
 async def load(extension_name: str):
     """Loads up a cog."""
