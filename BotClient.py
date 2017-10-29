@@ -43,7 +43,7 @@ async def on_command_error(event, *args):
     desc=format_exc()
     await bot.say(embed=EmbGen(title="Error!",
                                description="{} has resulted in the following error:\n{}".format(message,desc)
-                               )
+                               ))
     
 @bot.command()
 async def load(extension_name: str):
