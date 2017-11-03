@@ -43,6 +43,11 @@ class AdminCommands:
     async def debug(self, ctx, *, code: str):
         """Evaluates code."""
         import inspect
+        import sys
+        import StringIO
+        stdout = sys.stdout
+        s = StringIO.StringIO()
+        sys.stdout = s
         code = code.strip('` ')
         result = None
 
@@ -59,12 +64,15 @@ class AdminCommands:
 
         try:
             result = eval(code, env)
+            sys.stdout = stdout
+            s.seek(0)
+            res = s.read()
             if inspect.isawaitable(result):
                 result = await result
         except Exception as e:
             await self.bot.say(embed=EmbGen(title="Debugging", description=type(e).__name__ + ': ' + str(e)))
             return
-        await self.bot.say(embed=EmbGen(title="Debugging...", description=result, footer="Python 3.6.2"))
+        await self.bot.say(embed=EmbGen(title="Debugging...", description=res, footer="Python 3.6.2"))
             
     @commands.has_permissions()
     @commands.command(pass_context=True, hidden=True)
