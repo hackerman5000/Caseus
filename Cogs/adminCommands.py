@@ -37,6 +37,29 @@ class AdminCommands:
         await self.bot.add_reaction(msg, u"\U0001F9C0")
         await self.bot.say(embed=EmbGen(title="Pong!", description=":ping_pong:!"))
         sleep(1)
+    
+    @commands.has_permissions()
+    @commands.command(pass_context=True)
+    async def python(self, ctx, *, code: str):
+        """ Evaluates Python code"""
+        import discord
+        if ("import os", "from os", "sleep") in ctx.message.content:
+            return EmbGen(title="Illegal Module",
+                          description="Illegal module cannot be imported.")
+        else:
+            try:
+                e = eval(code)
+            except Exception as Exc:
+                return EmbGen(title="Error",
+                              description="{}".format(Exc.with_traceback()))
+            else:
+                if e is not None:
+                    desc = str(e)
+                else:
+                    desc= "It would seem that nothing is here..."
+            return EmbGen(title="Executing Code...",
+                          description=desc,
+                          color=discord.Color.green())
 
     @commands.has_permissions()
     @commands.command(pass_context=True)
