@@ -50,17 +50,17 @@ class AdminCommands:
             try:
                 e = eval(code)
             except Exception as Exc:
-                return EmbGen(title="Error",
-                              description="{}".format(Exc.with_traceback()))
+                await self.bot.say(EmbGen(title="Error",
+                              description="{}".format(Exc.with_traceback())))
             else:
                 if e is not None:
                     desc = str(e)
                 else:
                     desc= "It would seem that nothing is here..."
-            return EmbGen(title="Executing Code...",
+            await self.bot.say(embed=EmbGen(title="Executing Code...",
                           description=desc,
-                          color=discord.Color.green())
-
+                          color=discord.Color.green()))
+            
     @commands.has_permissions()
     @commands.command(pass_context=True, hidden=True)
     async def ver(self, ctx):
