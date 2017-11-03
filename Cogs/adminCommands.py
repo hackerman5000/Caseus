@@ -62,12 +62,6 @@ class AdminCommands:
                           color=discord.Color.green())
 
     @commands.has_permissions()
-    @commands.command(pass_context=True)
-    async def python(self, ctx):
-        """ Interprets Python Code and gets the result from repl.it/python3 """
-        await self.bot.say("***This has'nt been implemented yet and is still in EXTREMELY early WIP.***")
-
-    @commands.has_permissions()
     @commands.command(pass_context=True, hidden=True)
     async def ver(self, ctx):
         """ Print Version Control and Console """
