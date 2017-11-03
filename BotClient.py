@@ -35,16 +35,6 @@ async def on_ready():
     await bot.change_presence(game=discord.Game(name="Grating Cheese(c#help)"))
 
     
-@bot.event
-async def on_command_error(event, *args):
-    """When an Error is raised, The Bot prints and Informs the following to the console."""
-    from traceback import format_exc
-    message = args[0]
-    desc=format_exc()
-    await bot.say(embed=EmbGen(title="Error!",
-                               description="{} has resulted in the following error:\n{}".format(message,desc)
-                               ))
-    
 @bot.command()
 async def load(extension_name: str):
     """Loads up a cog."""
