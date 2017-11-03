@@ -43,7 +43,7 @@ class AdminCommands:
     async def python(self, ctx, *, code: str):
         """ Evaluates Python code"""
         import discord
-        if ("import os", "from os", "sleep") in ctx.message.content:
+        if "import os" in ctx.message.content or "from os" in ctx.message.content or "sleep" in ctx.message.content:
             return EmbGen(title="Illegal Module",
                           description="Illegal module cannot be imported.")
         else:
