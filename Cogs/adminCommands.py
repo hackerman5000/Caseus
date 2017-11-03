@@ -40,26 +40,31 @@ class AdminCommands:
     
     @commands.has_permissions()
     @commands.command(pass_context=True)
-    async def python(self, ctx, *, code: str):
-        """ Evaluates Python code"""
-        import discord
-        if "import os" in ctx.message.content or "from os" in ctx.message.content or "sleep" in ctx.message.content:
-            return EmbGen(title="Illegal Module",
-                          description="Illegal module cannot be imported.")
-        else:
-            try:
-                e = eval(code)
-            except Exception as Exc:
-                await self.bot.say(EmbGen(title="Error",
-                              description="{}".format(Exc.with_traceback())))
-            else:
-                if e is not None:
-                    desc = str(e)
-                else:
-                    desc= "It would seem that nothing is here..."
-            await self.bot.say(embed=EmbGen(title="Executing Code...",
-                          description=desc,
-                          color=discord.Color.green()))
+    async def debug(self, ctx, *, code: str):
+        """Evaluates code."""
+        import inspect
+        code = code.strip('` ')
+        result = None
+
+        env = {
+            'bot': self.bot,
+            'ctx': ctx,
+            'message': ctx.message,
+            'server': ctx.message.server,
+            'channel': ctx.message.channel,
+            'author': ctx.message.author
+        }
+
+        env.update(globals())
+
+        try:
+            result = eval(code, env)
+            if inspect.isawaitable(result):
+                result = await result
+        except Exception as e:
+            await self.bot.say(embed=EmbGen(title="Debugging", description=type(e).__name__ + ': ' + str(e)))
+            return
+        await self.bot.say(embed=EmbGen(title="Debugging...", description=result, footer="Python 3.6.2"))
             
     @commands.has_permissions()
     @commands.command(pass_context=True, hidden=True)
