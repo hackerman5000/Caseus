@@ -35,7 +35,7 @@ async def on_ready():
 
 @bot.event
 async def on_command_error(ctx, error):
-    await ctx.send(embed=EmbGen(title="An Error has occured...",
+    await ctx.send(embed=EmbGen(title=":c",
                                 description=f"***{str(error).title()}***",
                                 color=discord.Color.red()))
 
