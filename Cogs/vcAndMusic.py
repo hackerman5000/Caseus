@@ -9,7 +9,7 @@ class VCAndMusic:
     @commands.command(pass_context=True)
     async def connect(self, ctx):
         """ Connect to a voice server. """
-        if self.bot.is_voice_connected(self, ctx.message.server):
+        if self.bot.is_connected(self, ctx.message.server):
             return await self.bot.say("I am already connected to a voice channel. Do not disconnect me if I am in use!")
         author = ctx.message.author
         voice_channel = author.voice_channel
