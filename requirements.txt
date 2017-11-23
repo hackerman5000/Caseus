@@ -2,7 +2,7 @@ aiohttp==2.2.5
 async-timeout==2.0.0
 cffi==1.11.2
 chardet==3.0.4
--e git+http://github.com/Rapptz/discord.py.git@rewritePyNaCl==1.0.1
+-e git+http://github.com/Rapptz/discord.py.git@rewrite#egg=discord.py[voice]
 six==1.11.0
 websockets==3.4
 yarl==0.14.2
