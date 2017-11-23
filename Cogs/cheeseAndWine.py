@@ -1,7 +1,7 @@
 ########################################################################################################################
 #                                                   COMMANDS                                                           #
 ########################################################################################################################
-""" Contains all 'Social' commands (c#wine, c#lmgtfy, c#cheese, c#pun .etc """
+""" Contains all 'Social' commands (c#wine, c#lmgtfy, c#cheese, c#pun .etc). """
 import urllib
 import discord
 import random
@@ -14,54 +14,49 @@ class CheeseAndWine:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(pass_context=True)
-    async def cheese(self, ctx, user_name: discord.User):
+    @commands.command()
+    async def cheese(self, ctx, member: discord.Member):
         """ Give someone a nice slice of cheese. """
         usr_list = []
-        author = ctx.message.author
-        author_mention = '<@{}>'.format(author.id)
-        await self.bot.add_reaction(ctx.message, u"\U0001F9C0")
-    
-        for member in ctx.message.server.members:
-            usr_list.append(member.id)
-    
-        if user_name.id == "369099294579359744":
+        author_mention = '<@{}>'.format(ctx.author.id)
+
+        for guild_member in ctx.message.guild.members:
+            usr_list.append(guild_member.id)
+
+        if member.id == ctx.bot.user.id:
             description = ("***Thank you, {} for the :cheese:!***".format(author_mention))
         else:
-            if user_name.id in usr_list and user_name.id != author.id:
-                target_mention = '<@{}>'.format(user_name.id)
+            if member.id in usr_list and member.id != member.id:
+                target_mention = '<@{}>'.format(member.id)
                 description = '***{0} has given {1} some :cheese:!***'.format(author_mention, target_mention)
             else:
                 description = "***{}, You can't just give :cheese: to yourself!***".format(author_mention)
-        await self.bot.say(embed=EmbGen(title="Cheese!", description=description))
-    
-    @commands.command(pass_context=True)
+        await ctx.send(embed=EmbGen(title="Cheese!", description=description))
+
+    @commands.command()
     async def choose(self, ctx, *choices: str):
         """Chooses between multiple choices."""
-        await self.bot.add_reaction(ctx.message, u"\U0001F9C0")
-        await self.bot.say(embed=EmbGen(title="I Choose...", description=random.choice(choices).title()))
-    
-    @commands.command(pass_context=True)
+        await ctx.send(embed=EmbGen(title="I Choose...", description=random.choice(choices).title()))
+
+    @commands.command()
     async def flip(self, ctx):
         """ Flips a coin! """
         print("Flipping Coin...")
-        await self.bot.add_reaction(ctx.message, u"\U0001F9C0")
-        await self.bot.say(embed=EmbGen(title="Flipping Coin...",
-                           description="Heads!" if random.randint(0, 1) == 1 else "Tails!"))
+        await ctx.send(embed=EmbGen(title="Flipping Coin...",
+                                   description="Heads!" if random.randint(0, 1) == 1 else "Tails!"))
         sleep(1)
-    
-    @commands.command(pass_context=True)
-    async def lmgtfy(self, ctx, link):
+
+    @commands.command()
+    async def lmgtfy(self, ctx, *, link: str):
         """ Let the self.bot google that for you...\nJust make sure to use quotes around multi-word searches."""
         link = urllib.parse.quote(link, safe='')
-        await self.bot.add_reaction(ctx.message, u"\U0001F9C0")
-        await self.bot.say(embed=EmbGen(
+        await ctx.send(embed=EmbGen(
                     title="One Freshly Baked Query(TM) coming right up!",
                     description="http://lmgtfy.com/?q={}".format(link)
                                   )
                            )
-    
-    @commands.command(pass_context=True)
+
+    @commands.command()
     async def pun(self, ctx):
         """ Produces 'freshly' fermented Cheese Puns."""
         cheese_puns = [
@@ -85,23 +80,21 @@ class CheeseAndWine:
                 "What's a cannibal's favorite cheese?\nLimburget!"
             ]
         print("Saying Pun...")
-        r_pun = cheese_puns[random.randint(0, len(cheese_puns) - 1)].split("\n")  # Use [0] for Pun and [-1] for answer
-        await self.bot.add_reaction(ctx.message, u"\U0001F9C0")
-        await self.bot.say(embed=EmbGen(title=r_pun[0], description="***{}***".format(r_pun[-1])))
-    
-    @commands.command(pass_context=True)
+        r_pun = random.choice(cheese_puns).split('\n')
+        await ctx.send(embed=EmbGen(title=r_pun[0], description="***{}***".format(r_pun[-1])))
+
+    @commands.command()
     async def wine(self, ctx, user_name: discord.User):
         """ Give someone a nice (non-alcoholic) glass of wine. """
         footer = ""
         usr_list = []
         author = ctx.message.author
         author_mention = ctx.message.author.mention
-        await self.bot.add_reaction(ctx.message, u"\U0001F377")  # <-- Wine Emoji - UTF-8.
-    
-        for member in ctx.message.server.members:
+
+        for member in ctx.message.guild.members:
             usr_list.append(member.id)
         else:
-            if user_name.id == "369099294579359744":
+            if user_name.id == ctx.bot.user.id:
                 description = "***Thanks for the :wine_glass:, {}!***".format(author_mention)
     
             else:
@@ -114,7 +107,7 @@ class CheeseAndWine:
     
                 else:
                     description = "***{}, You can't just give :wine_glass: to yourself!***".format(author_mention)
-            await self.bot.say(embed=EmbGen(description=description + "\n" + footer))
+            await ctx.send(embed=EmbGen(description=description + "\n" + footer))
 
 
 def setup(bot):
