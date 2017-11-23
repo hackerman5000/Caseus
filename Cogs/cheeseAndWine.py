@@ -26,7 +26,7 @@ class CheeseAndWine:
         if member.id == ctx.bot.user.id:
             description = ("***Thank you, {} for the :cheese:!***".format(author_mention))
         else:
-            if member.id in usr_list and member.id != member.id:
+            if member.id in usr_list and member.id != ctx.message.author.id:
                 target_mention = '<@{}>'.format(member.id)
                 description = '***{0} has given {1} some :cheese:!***'.format(author_mention, target_mention)
             else:
