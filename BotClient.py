@@ -8,14 +8,12 @@ version = '1.75.1'
 bot_token = os.getenv('bot_token')
 
 # Initiates the Bot class, Detailing the prefix.
-# Initiates the Bot class, Detailing the prefix.
 bot = commands.Bot(command_prefix=prefix,
                    description='Bonjour Monsieur / Madame.\n',
                    pm_help=None,
-                   command_not_found=EmbGen(title="Command not found!",
-                                            description="That command does not exist, Try again!"),
-                   owner_id="205633407093309440"
-        )
+                   owner_id=205633407093309440
+                   )
+
 # These are the extensions (cogs).
 Extensions = ["Cogs.adminCommands", "Cogs.cheeseAndWine", "Cogs.vcAndMusic"]
 
@@ -34,30 +32,24 @@ async def on_ready():
     print("ID: {}".format(bot.user.id))
     await bot.change_presence(game=discord.Game(name="Grating Cheese(c#help)"))
 
-    
-@bot.command()
-async def load(extension_name: str):
-    """Loads up a cog."""
-    try:
-        bot.load_extension(extension_name)
-    except Exception as e:
-        await bot.say("```py\n{}: {}\n```".format(type(e).__name__, str(e)))
-        return
-    await bot.say("Extension {} loaded.".format(extension_name))
+
+@bot.event
+async def on_command_error(ctx, error):
+    await ctx.send(embed=EmbGen(title="An Error has occured...",
+                                description=f"***{str(error).title()}***",
+                                color=discord.Color.red()))
 
 
-@bot.command()
-async def unload(extension_name: str):
-    """Unloads a cog."""
-    bot.unload_extension(extension_name)
-    await bot.say("Extension {} unloaded.".format(extension_name))
+@bot.before_invoke
+async def BeforeInvoke(ctx):
+    await ctx.message.add_reaction(u"\U0001F9C0")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     for extension in Extensions:
         try:
             bot.load_extension(extension)
         except Exception as e:
-            exc = '{}: {}'.format(type(e).__name__, e)
-            print('Failed to load extension {}\n{}'.format(extension, exc))
+            print(f'Failed to load extension {extension}.')
+
 
 bot.run(bot_token)
