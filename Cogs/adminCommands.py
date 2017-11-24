@@ -30,7 +30,7 @@ class AdminCommands:
             'bot': self.bot,
             'ctx': ctx,
             'message': ctx.message,
-            'server': ctx.message.server,
+            'server': ctx.message.guild,
             'channel': ctx.message.channel,
             'author': ctx.message.author
         }
