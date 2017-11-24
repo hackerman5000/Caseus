@@ -55,9 +55,11 @@ class VCAndMusic:
         self.bot = bot
         
     @commands.command()
-    async def connect(self, ctx, *, channel: discord.VoiceChannel):
+    async def connect(self, ctx):
         """Connects to a voice channel"""
-        if ctx.voice_client is not None:
+        
+        channel = ctx.message.author.voice.voice_channel
+        if ctx.voice_client is not None and channel is not None:
             ctx.send(embed=Embed(
                 title="Joining Voice Channel...",
                 description=f"Joining the {channel} channel",
