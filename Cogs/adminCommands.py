@@ -54,7 +54,6 @@ class AdminCommands:
             description=python.format(result),
             color=discord.Color.green()
         ))
-        await self.bot.say(python.format(result))
 
     @commands.has_permissions()
     @commands.command(hidden=True)
