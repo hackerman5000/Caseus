@@ -62,23 +62,20 @@ class AdminCommands:
     async def help(self, ctx):
         """ Shows this message. """
         msg = await ctx.send(embed=Embed(title='Loading Help...', color=discord.Color.dark_magenta()))
-        e = Embed(title='Help', color=discord.Color.magenta(),
-                  description='***Dunno who to call?***\n*c#help!*\n'
-                              'The prefix \'c#\' must be used before any command.')
-        e.add_field(name='Commands:', value=' ')
+        e = Embed(title='Dunno who call? c#help!', color=discord.Color.magenta(),
+                  description='The prefix \'c#\' must be used before any command.')
         for command_obj in self.bot.all_commands.values():
             if not command_obj.hidden:
                 e.add_field(name=f'{command_obj.name.title()}',
                             value=f'{command_obj.help}',
                             inline=False)
-                e.add_field(name=' ', value=' ', inline=False)
         await msg.edit(embed=e)
 
     @commands.has_permissions()
     @commands.command(hidden=True)
     async def ping(self, ctx):
         """ Tests self.bot Functionality """
-        re = f'Responded in {self.bot.latency}ms microseconds.'
+        re = f'Responded in {round(self.bot.latency, 2)} microseconds.'
         e = EmbGen(title='Pong!', description=':ping_pong:!', footer=re)
         await ctx.send(embed=e)
 
