@@ -20,14 +20,50 @@ class AdminCommands:
 
     @commands.has_permissions()
     @commands.command(hidden=True)
+    async def debug(self, ctx, *, code: str):
+        """Evaluates code. [Credit to Rapptz/Danny]"""
+        code = code.strip('` ')
+        python = '```py\n{}\n```'
+        result = None
+
+        env = {
+            'bot': self.bot,
+            'ctx': ctx,
+            'message': ctx.message,
+            'server': ctx.message.guild,
+            'channel': ctx.message.channel,
+            'author': ctx.message.author
+        }
+
+        env.update(globals())
+
+        try:
+            result = eval(code, env)
+            if inspect.isawaitable(result):
+                result = await result
+        except Exception as e:
+            await ctx.send(embed=Embed(
+                title='Exception Raised...',
+                description=(python.format(type(e).__name__+":"+str(e))),
+                color=discord.Color.dark_red()
+            ))
+            return
+        else:
+            await ctx.send(embed=Embed(
+                title='Code Evaluated...',
+                description=result,
+                color=discord.Color.green()
+            ))
+            return
+
+    @commands.has_permissions()
+    @commands.command(hidden=True)
     async def ping(self, ctx):
         """ Tests self.bot Functionality """
-        print("Pinged by..." + ctx.message.author.name)
-        now = datetime.datetime.utcnow()
-        delta = now - ctx.message.created_at
-        re = f'Responded in {delta.microseconds} microseconds.'
+        re = f'Responded in {self.bot.latency}ms microseconds.'
         e = EmbGen(title='Pong!', description=':ping_pong:!', footer=re)
         await ctx.send(embed=e)
+
 
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
