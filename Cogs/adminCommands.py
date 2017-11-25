@@ -2,6 +2,7 @@
 import discord
 import inspect
 import discord.ext.commands as commands
+from discord.ext.commands import BucketType
 from discord.embeds import Embed
 from HelperFunctions.EmbedGenerator import EmbGen
 from time import sleep
@@ -56,17 +57,21 @@ class AdminCommands:
             ))
             return
         
+    @commands.cooldown(rate=1, per=150, type=BucketType.guild)
     @commands.command()
     async def help(self, ctx):
         """ Shows this message. """
-        msg = await ctx.send(embed=Embed(title='Loading Help...', color=discord.Color.dark_purple()))
-        e = Embed(title='Help', color=discord.Color.purple())
-
-        for command_obj in self.bot.all_commands.values():
+        msg = await ctx.send(embed=Embed(title='Loading Help...', color=discord.Color.greyple()))
+        e = Embed(title='Help', color=discord.Color.magenta(),
+                  description='***Dunno who to call?***\n*c#help!*\n'
+                              'The prefix \'c#\' must be used before any command.')
+        e.add_field(name='Commands:', value=' ')
+        for command, command_obj in self.bot.all_commands:
             if not command_obj.hidden:
-                e.add_field(name=f'{command_obj.name}',
+                e.add_field(name=f'{command_obj.name.title()}',
                             value=f'{command_obj.help}',
                             inline=False)
+                e.add_field(name=' ', value=' ', inline=False)
         await msg.edit(embed=e)
 
     @commands.has_permissions()
