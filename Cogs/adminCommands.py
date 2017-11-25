@@ -13,14 +13,14 @@ class AdminCommands:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.has_permissions()
     @commands.command(hidden=True)
+    @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx, number: int):
         """ Clears chat log 'n' messages."""
         await ctx.channel.purge(limit=number+1)
 
-    @commands.has_permissions()
     @commands.command(hidden=True)
+    @commands.has_permissions(administrator=True)
     async def debug(self, ctx, *, code: str):
         """Evaluates code. [Credit to Rapptz/Danny]"""
         code = code.strip('` ')
@@ -71,8 +71,8 @@ class AdminCommands:
                             inline=False)
         await msg.edit(embed=e)
 
-    @commands.has_permissions()
     @commands.command(hidden=True)
+    @commands.has_permissions(administrator=True)
     async def ping(self, ctx):
         """ Tests self.bot Functionality """
         re = f'Responded in {round(self.bot.latency, 2)} microseconds.'
