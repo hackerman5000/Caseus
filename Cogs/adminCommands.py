@@ -55,6 +55,19 @@ class AdminCommands:
                 color=discord.Color.green()
             ))
             return
+        
+    @commands.command()
+    async def help(self, ctx):
+        """ Shows this message. """
+        msg = await ctx.send(embed=Embed(title='Loading Help...', color=discord.Color.dark_purple()))
+        e = Embed(title='Help', color=discord.Color.purple())
+
+        for command, command_obj in self.bot.all_commands:
+            if not command_obj.hidden:
+                e.add_field(name=f'{command_obj.name}',
+                            value=f'{command_obj.help}',
+                            inline=False)
+        await msg.edit(embed=e)
 
     @commands.has_permissions()
     @commands.command(hidden=True)
