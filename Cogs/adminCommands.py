@@ -72,7 +72,6 @@ class AdminCommands:
         await msg.edit(embed=e)
 
     @commands.command(hidden=True)
-    @commands.has_permissions(administrator=True)
     async def ping(self, ctx):
         """ Tests self.bot Functionality """
         re = f'Responded in {round(self.bot.latency, 2)} microseconds.'
