@@ -62,7 +62,7 @@ class AdminCommands:
         msg = await ctx.send(embed=Embed(title='Loading Help...', color=discord.Color.dark_purple()))
         e = Embed(title='Help', color=discord.Color.purple())
 
-        for command, command_obj in self.bot.all_commands:
+        for command, command_obj in self.bot.all_commands.values():
             if not command_obj.hidden:
                 e.add_field(name=f'{command_obj.name}',
                             value=f'{command_obj.help}',
