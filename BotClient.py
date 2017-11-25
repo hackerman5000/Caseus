@@ -13,6 +13,7 @@ bot = commands.Bot(command_prefix=prefix,
                    pm_help=None,
                    owner_id=205633407093309440
                    )
+bot.remove_command('help')
 
 # These are the extensions (cogs).
 Extensions = ["Cogs.adminCommands", "Cogs.cheeseAndWine", "Cogs.vcAndMusic"]
