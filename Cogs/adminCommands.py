@@ -77,7 +77,24 @@ class AdminCommands:
         re = f'Responded in {round(self.bot.latency, 2)} microseconds.'
         e = EmbGen(title='Pong!', description=':ping_pong:!', footer=re)
         await ctx.send(embed=e)
+    
+    @commands.command(hidden=True)
+    @commands.has_permissions(administrator=True)
+    async def silence(self, ctx, usr: discord.Member, sec: int):
+        """Silence a User for {sec} seconds."""
+        if sec is None:
+            sec = 60
 
+        usr.edit(mute=True)
+        ctx.message.delete()
+        asyncio.sleep(sec)
+        msg = ctx.send(embed=Embed(title=':)',
+                                   description=f"Hope you've learnt your Lesson, {usr.mention}",
+                                   color=discord.Color.gold()))
+        usr.edit(mute=False)
+        asyncio.sleep(5)
+        msg.delete()
 
+        
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
