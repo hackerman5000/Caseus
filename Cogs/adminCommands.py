@@ -1,4 +1,5 @@
 """ Contains admin only commands, c#clear, c#ping .etc... """
+import asyncio
 import discord
 import inspect
 import discord.ext.commands as commands
@@ -87,12 +88,12 @@ class AdminCommands:
 
         usr.edit(mute=True)
         ctx.message.delete()
-        asyncio.sleep(sec)
-        msg = ctx.send(embed=Embed(title=':)',
-                                   description=f"Hope you've learnt your Lesson, {usr.mention}",
-                                   color=discord.Color.gold()))
+        await asyncio.sleep(sec)
+        msg = await ctx.send(embed=Embed(title=':)',
+                                         description=f"Hope you've learnt your Lesson, {usr.mention}",
+                                         color=discord.Color.gold()))
         usr.edit(mute=False)
-        asyncio.sleep(5)
+        await asyncio.sleep(5)
         msg.delete()
 
         
