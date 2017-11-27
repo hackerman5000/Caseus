@@ -87,7 +87,7 @@ class AdminCommands:
             await ctx.message.guild.create_role(name='Muted',
                                                 color=discord.Color.red(),
                                                 mentionable=True)
-        muted = await discord.utils.get(ctx.message.guild.roles, name='Muted')
+        muted = discord.utils.get(ctx.message.guild.roles, name='Muted')
         await usr.add_roles(muted)
         asyncio.sleep(sec)
         await usr.remove_roles(muted)
