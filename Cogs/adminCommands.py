@@ -87,13 +87,21 @@ class AdminCommands:
             await ctx.message.guild.create_role(name='Muted',
                                                 color=discord.Color.red(),
                                                 mentionable=True)
+        usr_roles = usr.roles()[1::]
         muted = discord.utils.get(ctx.message.guild.roles, name='Muted')
         await usr.add_roles(muted)
+
+        for role in usr_roles:
+            await usr.remove_roles(role)
         await asyncio.sleep(sec)
         await usr.remove_roles(muted)
+
+        for role in usr_roles:
+            await usr.add_roles(role)
         await ctx.send(embed=Embed(title=':)',
                                    description=f"Hope you've learnt your Lesson, {usr.mention}",
                                    color=discord.Color.gold()), delete_after=5)
+
         
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
