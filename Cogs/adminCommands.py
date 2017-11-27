@@ -83,18 +83,17 @@ class AdminCommands:
     @commands.has_permissions(manage_messages=True)
     async def silence(self, ctx, usr: discord.Member, sec: int):
         """ Silence a User for {sec} seconds. """
-        if 'Muted' not in ctx.message.guild.roles.names:
+        if 'Muted' not in [role.name for role in ctx.message.guild.roles]:
             await ctx.message.guild.create_role(name='Muted',
                                                 color=discord.Color.red(),
                                                 mentionable=True)
         muted = [role for role in ctx.message.guild.roles if role.name == "Muted"].pop()
         await usr.add_roles(muted)
-        await asyncio.sleep(sec)
+        asyncio.sleep(sec)
         await usr.remove_roles(muted)
         await ctx.send(embed=Embed(title=':)',
                                    description=f"Hope you've learnt your Lesson, {usr.mention}",
                                    color=discord.Color.gold()), delete_after=5)
-
         
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
