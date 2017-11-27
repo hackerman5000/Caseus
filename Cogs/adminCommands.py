@@ -89,7 +89,7 @@ class AdminCommands:
                                                 mentionable=True)
         muted = discord.utils.get(ctx.message.guild.roles, name='Muted')
         await usr.add_roles(muted)
-        asyncio.sleep(sec)
+        await asyncio.sleep(sec)
         await usr.remove_roles(muted)
         await ctx.send(embed=Embed(title=':)',
                                    description=f"Hope you've learnt your Lesson, {usr.mention}",
