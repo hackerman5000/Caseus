@@ -87,7 +87,7 @@ class AdminCommands:
             await ctx.message.guild.create_role(name='Muted',
                                                 color=discord.Color.red(),
                                                 mentionable=True)
-        usr_roles = usr.roles()[1::]
+        usr_roles = usr.roles[1::]
         muted = discord.utils.get(ctx.message.guild.roles, name='Muted')
         await usr.add_roles(muted)
 
