@@ -102,6 +102,6 @@ class AdminCommands:
                                    description=f"Hope you've learnt your Lesson, {usr.mention}",
                                    color=discord.Color.gold()), delete_after=5)
 
-        
+ 
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
