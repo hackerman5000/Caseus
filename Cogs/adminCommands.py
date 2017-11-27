@@ -80,7 +80,7 @@ class AdminCommands:
         await ctx.send(embed=e)
     
     @commands.command(hidden=True)
-    @commands.has_permissions(manage_messages=True)
+    @commands.has_permissions(administrator=True)
     async def silence(self, ctx, usr: discord.Member, sec: int):
         """ Silence a User for {sec} seconds. """
         if 'Muted' not in [role.name for role in ctx.message.guild.roles]:
