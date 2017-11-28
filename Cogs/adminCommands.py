@@ -90,7 +90,8 @@ class AdminCommands:
         usr_roles = usr.roles[1::]
         muted = discord.utils.get(ctx.message.guild.roles, name='Muted')
         await usr.add_roles(muted)
-
+        await ctx.message.delete()
+        
         for role in usr_roles:
             await usr.remove_roles(role)
         await asyncio.sleep(sec)
