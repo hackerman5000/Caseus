@@ -3,6 +3,7 @@ import asyncio
 import discord
 import inspect
 import discord.ext.commands as commands
+from WineRecords import main
 from discord.ext.commands import BucketType
 from discord.embeds import Embed
 from HelperFunctions.EmbedGenerator import EmbGen
