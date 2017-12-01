@@ -79,6 +79,25 @@ class AdminCommands:
         e = EmbGen(title='Pong!', description=':ping_pong:!', footer=re)
         await ctx.send(embed=e)
     
+    @commands.command()
+    async def profile(self, ctx, usr: discord.Member):
+        """Gets a User's/Member's profile."""
+        wine = main(usr.id)
+        last_message = await ctx.channel.history().get(author__name=f'{usr.name}')
+
+        profile = Embed(title=f"{usr.name}'s Profile",
+                        color=usr.color,
+                        footer=f'Also known as, {usr.display_name}')
+        profile.add_field(name='Role:', value=f"{usr.top_role}")
+        profile.add_field(name="Joined at:",
+                          value=f"{usr.joined_at}",
+                          inline=True)
+        profile.add_field(name='Glasses of Wine given:', value=f'{wine}')
+        profile.add_field(name='Last Message sent (in channel):',
+                          value=f'{last_message}')
+
+        await ctx.send(embed=profile)
+    
     @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
     async def silence(self, ctx, usr: discord.Member, sec: int):
