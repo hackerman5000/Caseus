@@ -7,8 +7,7 @@ from WineRecords import main
 from discord.ext.commands import BucketType
 from discord.embeds import Embed
 from HelperFunctions.EmbedGenerator import EmbGen
-from time import sleep
-from date import strftime
+from time import sleep, strftime
 import datetime
 
 
@@ -93,7 +92,7 @@ class AdminCommands:
         """Gets a User's/Member's profile."""
         wine = main(usr.id)
         last_message = await ctx.channel.history().get(author__name=f'{usr.name}')
-        joined_at = date.strftime('%B %d %Y at %I:%M %p', usr.joined_at)
+        joined_at = time.strftime('%B %d %Y at %I:%M %p', usr.joined_at)
         profile = Embed(title=f"{usr.name}'s Profile",
                         color=usr.color)
         profile.set_thumbnail(url=usr.avatar_url)
