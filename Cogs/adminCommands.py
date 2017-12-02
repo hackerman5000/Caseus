@@ -92,7 +92,7 @@ class AdminCommands:
         """Gets a User's/Member's profile."""
         wine = main(usr.id)
         last_message = await ctx.channel.history().get(author__name=f'{usr.name}')
-        joined_at = strftime('%B %d %Y at %I:%M %p', usr.joined_at)
+        joined_at = usr.joined_at.strftime('%B %d %Y at %I:%M %p')
         profile = Embed(title=f"{usr.name}'s Profile",
                         color=usr.color)
         profile.set_thumbnail(url=usr.avatar_url)
