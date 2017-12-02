@@ -8,7 +8,6 @@ from discord.ext.commands import BucketType
 from discord.embeds import Embed
 from HelperFunctions.EmbedGenerator import EmbGen
 from time import sleep
-from datetime import strftime
 import datetime
 
 
@@ -81,15 +80,21 @@ class AdminCommands:
         e = EmbGen(title='Pong!', description=':ping_pong:!', footer=re)
         await ctx.send(embed=e)
 
+    @commands.command(hidden=True)
+    async def ping(self, ctx):
+        """ Tests self.bot Functionality """
+        re = f'Responded in {round(self.bot.latency, 2)} microseconds.'
+        e = EmbGen(title='Pong!', description=':ping_pong:!', footer=re)
+        await ctx.send(embed=e)
+
     @commands.command()
     async def profile(self, ctx, usr: discord.Member):
         """Gets a User's/Member's profile."""
         wine = main(usr.id)
         last_message = await ctx.channel.history().get(author__name=f'{usr.name}')
-        joined_at = strftime('%B %d %Y at %I:%M %p', usr.joined_at)
+        joined_at = datetime.strftime('%B %d %Y at %I:%M %p', usr.joined_at)
         profile = Embed(title=f"{usr.name}'s Profile",
-                        color=usr.color,
-                        footer=f'Also known as, {usr.display_name}')
+                        color=usr.color)
         profile.set_thumbnail(url=usr.avatar_url)
         profile.add_field(name='Role:', value=f"{usr.top_role}")
         profile.add_field(name="Joined at:",
