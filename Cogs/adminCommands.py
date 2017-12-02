@@ -80,7 +80,7 @@ class AdminCommands:
         re = f'Responded in {round(self.bot.latency, 2)} microseconds.'
         e = EmbGen(title='Pong!', description=':ping_pong:!', footer=re)
         await ctx.send(embed=e)
-    
+
     @commands.command()
     async def profile(self, ctx, usr: discord.Member):
         """Gets a User's/Member's profile."""
