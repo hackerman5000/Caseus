@@ -91,11 +91,15 @@ class AdminCommands:
     async def profile(self, ctx, usr: discord.Member):
         """Gets a User's/Member's profile."""
         wine = main(usr.id)
+        joined_at = usr.joined_at.strftime('%B-%d-%Y|%I:%M%p')
         last_message = await ctx.channel.history().get(author__name=f'{usr.name}')
         profile = Embed(title=f"{usr.name}'s Profile",
                         color=usr.color)
-        profile.set_thumbnail(url=usr.avatar_url)
+        profile.set_thumbnail(url=usr.avatar_url_as(static_format='png', size=256))
         profile.add_field(name='Role:', value=f"{usr.top_role}")
+        profile.add_field(name="Joined at:",
+                          value=f"{joined_at}",
+                          inline=True)
         profile.add_field(name='Glasses of Wine given:', value=f'{wine}')
         profile.add_field(name='Last Message sent (in channel):',
                           value=f'{last_message.content}')
