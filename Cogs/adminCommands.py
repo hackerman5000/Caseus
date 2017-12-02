@@ -96,9 +96,6 @@ class AdminCommands:
                         color=usr.color)
         profile.set_thumbnail(url=usr.avatar_url)
         profile.add_field(name='Role:', value=f"{usr.top_role}")
-        profile.add_field(name="Joined at:",
-                          value=f"{joined_at}",
-                          inline=True)
         profile.add_field(name='Glasses of Wine given:', value=f'{wine}')
         profile.add_field(name='Last Message sent (in channel):',
                           value=f'{last_message.content}')
