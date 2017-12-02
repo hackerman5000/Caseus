@@ -8,6 +8,7 @@ from discord.ext.commands import BucketType
 from discord.embeds import Embed
 from HelperFunctions.EmbedGenerator import EmbGen
 from time import sleep
+from datetime import strftime
 import datetime
 
 
@@ -85,17 +86,18 @@ class AdminCommands:
         """Gets a User's/Member's profile."""
         wine = main(usr.id)
         last_message = await ctx.channel.history().get(author__name=f'{usr.name}')
-
+        joined_at = strftime('%B %d %Y at %I:%M %p', usr.joined_at)
         profile = Embed(title=f"{usr.name}'s Profile",
                         color=usr.color,
                         footer=f'Also known as, {usr.display_name}')
+        profile.set_thumbnail(url=usr.avatar_url)
         profile.add_field(name='Role:', value=f"{usr.top_role}")
         profile.add_field(name="Joined at:",
-                          value=f"{usr.joined_at}",
+                          value=f"{joined_at}",
                           inline=True)
         profile.add_field(name='Glasses of Wine given:', value=f'{wine}')
         profile.add_field(name='Last Message sent (in channel):',
-                          value=f'{last_message}')
+                          value=f'{last_message.content}')
 
         await ctx.send(embed=profile)
     
