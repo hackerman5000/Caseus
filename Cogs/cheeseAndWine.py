@@ -18,19 +18,19 @@ class CheeseAndWine:
     async def cheese(self, ctx, member: discord.Member):
         """ Give someone a nice slice of cheese. """
         usr_list = []
-        author_mention = '<@{}>'.format(ctx.author.id)
+        author_mention = f'<@{ctx.author.id}>'
 
         for guild_member in ctx.message.guild.members:
             usr_list.append(guild_member.id)
 
         if member.id == ctx.bot.user.id:
-            description = ("***Thank you, {} for the :cheese:!***".format(author_mention))
+            description = f"***Thank you, {author_mention} for the :cheese:!***"
         else:
             if member.id in usr_list and member.id != ctx.message.author.id:
-                target_mention = '<@{}>'.format(member.id)
-                description = '***{0} has given {1} some :cheese:!***'.format(author_mention, target_mention)
+                target_mention = f'<@{member.id}>'
+                description = f'***{author_mention} has given {target_mention} some :cheese:!***'
             else:
-                description = "***{}, You can't just give :cheese: to yourself!***".format(author_mention)
+                description = f"***{author_mention}, You can't just give :cheese: to yourself!***"
         await ctx.send(embed=EmbGen(title="Cheese!", description=description))
 
     @commands.command()
@@ -81,7 +81,7 @@ class CheeseAndWine:
             ]
         print("Saying Pun...")
         r_pun = random.choice(cheese_puns).split('\n')
-        await ctx.send(embed=EmbGen(title=r_pun[0], description="***{}***".format(r_pun[-1])))
+        await ctx.send(embed=discord.Embed(title=r_pun[0], description=f"***{r_pun[-1]}***", color=discord.Color.dark_gold)
 
     @commands.command()
     async def wine(self, ctx, user_name: discord.User):
@@ -95,19 +95,18 @@ class CheeseAndWine:
             usr_list.append(member.id)
         else:
             if user_name.id == ctx.bot.user.id:
-                description = "***Thanks for the :wine_glass:, {}!***".format(author_mention)
+                description = f"*** Thanks for the :wine_glass:, {author_mention}***"
     
             else:
                 if user_name.id in usr_list and user_name.id != author.id:
                     from WineRecords import main
                     target_mention = user_name.mention
-                    description = '***{0} has given {1} a glass of :wine_glass:!***'.format(author_mention,
-                                                                                            target_mention)
+                    description = f"***{author_mention} has given {target_mention} a glass of :wine_glass:!***"
                     footer = main(user_name.id)
     
                 else:
-                    description = "***{}, You can't just give :wine_glass: to yourself!***".format(author_mention)
-            await ctx.send(embed=EmbGen(description=description + "\n" + footer))
+                    description = f"***{author_mention}, You can't just give :wine_glass: to yourself!***"
+                    await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red))
 
 
 def setup(bot):
