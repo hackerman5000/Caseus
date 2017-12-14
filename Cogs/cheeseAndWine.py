@@ -81,7 +81,7 @@ class CheeseAndWine:
             ]
         print("Saying Pun...")
         r_pun = random.choice(cheese_puns).split('\n')
-        await ctx.send(embed=discord.Embed(title=r_pun[0], description=f"***{r_pun[-1]}***", color=discord.Color.dark_gold))
+        await ctx.send(embed=discord.Embed(title=r_pun[0], description=f"***{r_pun[-1]}***", color=discord.Color.dark_gold()))
 
     @commands.command()
     async def wine(self, ctx, user_name: discord.User):
