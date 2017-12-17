@@ -6,7 +6,7 @@ import urllib
 import discord
 import random
 import discord.ext.commands as commands
-from HelperFunctions.EmbedGenerator import EmbGen
+from discord import Embed
 from time import sleep
 
 
@@ -17,44 +17,35 @@ class CheeseAndWine:
     @commands.command()
     async def cheese(self, ctx, member: discord.Member):
         """ Give someone a nice slice of cheese. """
-        usr_list = []
         author_mention = f'<@{ctx.author.id}>'
-
-        for guild_member in ctx.message.guild.members:
-            usr_list.append(guild_member.id)
 
         if member.id == ctx.bot.user.id:
             description = f"***Thank you, {author_mention} for the :cheese:!***"
         else:
-            if member.id in usr_list and member.id != ctx.message.author.id:
+            if member.id != ctx.message.author.id:
                 target_mention = f'<@{member.id}>'
                 description = f'***{author_mention} has given {target_mention} some :cheese:!***'
             else:
                 description = f"***{author_mention}, You can't just give :cheese: to yourself!***"
-        await ctx.send(embed=EmbGen(title="Cheese!", description=description))
+        await ctx.send(embed=Embed(title="Cheese!", description=description, color=discord.Color.gold()))
 
     @commands.command()
     async def choose(self, ctx, *choices: str):
         """Chooses between multiple choices."""
-        await ctx.send(embed=EmbGen(title="I Choose...", description=random.choice(choices).title()))
+        await ctx.send(embed=Embed(title="I Choose...", description=random.choice(choices).title(), color=discord.Color.gold()))
 
     @commands.command()
     async def flip(self, ctx):
         """ Flips a coin! """
-        print("Flipping Coin...")
-        await ctx.send(embed=EmbGen(title="Flipping Coin...",
-                                   description="Heads!" if random.randint(0, 1) == 1 else "Tails!"))
-        sleep(1)
+        await ctx.send(embed=Embed(title="Flipping Coin...", description=random.choice(["Heads!", "Tails!"]), color=discord.Color.gold()))
 
     @commands.command()
     async def lmgtfy(self, ctx, *, link: str):
         """ Let the self.bot google that for you...\nJust make sure to use quotes around multi-word searches."""
         link = urllib.parse.quote(link, safe='')
-        await ctx.send(embed=EmbGen(
-                    title="One Freshly Baked Query(TM) coming right up!",
-                    description="http://lmgtfy.com/?q={}".format(link)
-                                  )
-                           )
+        await ctx.send(embed=Embed(title="One Freshly Baked Query(TM) coming right up!", 
+                                   description=f"http://lmgtfy.com/?q={link}", 
+                                   color=discord.Color.gold()))
 
     @commands.command()
     async def pun(self, ctx):
@@ -79,32 +70,23 @@ class CheeseAndWine:
                 "What's the last piece of cheese left?\nForever Provolone!",
                 "What's a cannibal's favorite cheese?\nLimburget!"
             ]
-        print("Saying Pun...")
         r_pun = random.choice(cheese_puns).split('\n')
         await ctx.send(embed=discord.Embed(title=r_pun[0], description=f"***{r_pun[-1]}***", color=discord.Color.dark_gold()))
 
     @commands.command()
-    async def wine(self, ctx, user_name: discord.User):
+    async def wine(self, ctx, user: discord.User):
         """ Give someone a nice (non-alcoholic) glass of wine. """
         footer = ""
-        usr_list = []
-        author = ctx.message.author
-        author_mention = ctx.message.author.mention
-
-        for member in ctx.message.guild.members:
-            usr_list.append(member.id)
+        
+        if user.id == ctx.bot.user.id:
+            description = f"*** Thanks for the :wine_glass:, {ctx.author.mention}***"
         else:
-            if user_name.id == ctx.bot.user.id:
-                description = f"*** Thanks for the :wine_glass:, {author_mention}***"
-    
+            if user.id != ctx.author.id:
+                from WineRecords import main
+                description = f"***{ctx.author.mention} has given {user.mention} a glass of :wine_glass:!***"
+                footer = main(user.id)
+
             else:
-                if user_name.id in usr_list and user_name.id != author.id:
-                    from WineRecords import main
-                    target_mention = user_name.mention
-                    description = f"***{author_mention} has given {target_mention} a glass of :wine_glass:!***"
-                    footer = main(user_name.id)
-    
-                else:
                     description = f"***{author_mention}, You can't just give :wine_glass: to yourself!***"
                     await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red))
 
