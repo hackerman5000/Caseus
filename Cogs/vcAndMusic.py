@@ -18,14 +18,14 @@ class VCAndMusic:
                                        color=discord.Color.dark_orange()
                                        ))
         else:
-            await ctx.author.voice.voice_channel.connect()
+            await ctx.author.voice.channel.connect()
             await ctx.send(embed=Embed(title="Connecting...",
                                        color=discord.Color.dark_magenta()))
 
     @commands.command()
     async def disconnect(self, ctx):
         """Disconnect from a Voice Channel"""
-        await ctx.user.voice.voice_channel.disconnect()
+        await ctx.user.voice.channel.disconnect()
         await ctx.send(embed=Embed(title=">Disconnected<",
                                    color=discord.Color.dark_red()))
  
