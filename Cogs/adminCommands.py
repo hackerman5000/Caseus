@@ -6,7 +6,6 @@ import discord.ext.commands as commands
 from WineRecords import main
 from discord.ext.commands import BucketType
 from discord.embeds import Embed
-from HelperFunctions.EmbedGenerator import EmbGen
 from time import sleep, strftime
 import datetime
 
@@ -77,14 +76,7 @@ class AdminCommands:
     async def ping(self, ctx):
         """ Tests self.bot Functionality """
         re = f'Responded in {round(self.bot.latency, 2)} microseconds.'
-        e = EmbGen(title='Pong!', description=':ping_pong:!', footer=re)
-        await ctx.send(embed=e)
-
-    @commands.command(hidden=True)
-    async def ping(self, ctx):
-        """ Tests self.bot Functionality """
-        re = f'Responded in {round(self.bot.latency, 2)} microseconds.'
-        e = EmbGen(title='Pong!', description=':ping_pong:!', footer=re)
+        e = Embed(title='Pong!', description=':ping_pong:!', color=discord.Color.green(), footer=re)
         await ctx.send(embed=e)
 
     @commands.command()
