@@ -1,6 +1,6 @@
 import os
 import discord
-from HelperFunctions.EmbedGenerator import EmbGen
+from discord import Embed
 from discord.ext import commands
 
 prefix = 'c#'  # Use this to 'command' a bot.
@@ -36,7 +36,7 @@ async def on_ready():
 
 @bot.event
 async def on_command_error(ctx, error):
-    await ctx.send(embed=EmbGen(title=":c",
+    await ctx.send(embed=Embed(title=":c",
                                 description=f"***{str(error).title()}***",
                                 color=discord.Color.red()))
 
