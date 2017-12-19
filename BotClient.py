@@ -4,7 +4,7 @@ from discord import Embed
 from discord.ext import commands
 
 prefix = 'c#'  # Use this to 'command' a bot.
-version = '1.75.1'
+version = os.getenv('HEROKU_RELEASE_VERSION')
 bot_token = os.getenv('bot_token')
 
 # Initiates the Bot class, Detailing the prefix.
