@@ -36,14 +36,19 @@ async def on_ready():
 
 @bot.event
 async def on_command_error(ctx, error):
-    await ctx.send(embed=Embed(title=":c",
-                                description=f"***{str(error).title()}***",
-                                color=discord.Color.red()))
+    """ Runs this block on Errors. """
+    print(f"Error raised by {ctx.author.name}[{ctx.guild.name}] using {ctx.message.content}")
+    await ctx.send(embed=discord.Embed(
+        title="An Error has occured...",
+        description=f"***{str(error).title()}***",
+        color=discord.Color.red()))
 
 
 @bot.before_invoke
 async def BeforeInvoke(ctx):
+    """ Runs this block of code before invokation. """
     await ctx.message.add_reaction(u"\U0001F9C0")
+    print(f"{ctx.author.name}[{ctx.guild.name}] invoked the command {ctx.message.content}.")
 
 if __name__ == '__main__':
     for extension in Extensions:
@@ -51,6 +56,5 @@ if __name__ == '__main__':
             bot.load_extension(extension)
         except Exception as e:
             print(f'Failed to load extension {extension}.')
-
 
 bot.run(bot_token)
