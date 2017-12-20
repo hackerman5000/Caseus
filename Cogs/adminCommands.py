@@ -1,4 +1,5 @@
 """ Contains admin only commands, c#clear, c#ping .etc... """
+import os
 import asyncio
 import discord
 import inspect
@@ -8,7 +9,6 @@ from discord.ext.commands import BucketType
 from discord.embeds import Embed
 from time import sleep, strftime
 import datetime
-
 
 class AdminCommands:
     def __init__(self, bot):
@@ -75,7 +75,7 @@ class AdminCommands:
     @commands.command(hidden=True)
     async def ping(self, ctx):
         """ Tests self.bot Functionality """
-        from BotClient import version
+        version = os.getenv('HEROKU_RELEASE_VERSION')
         e = Embed(title='Pong!', description=':ping_pong:!', color=discord.Color.green())
         e.add_field(name="Latency:", value=f"Responded in {round(self.bot.latency, 2)} microseconds.")
         e.set_footer(text=f"Caseus Version {version}")
