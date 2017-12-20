@@ -92,8 +92,8 @@ class AdminCommands:
         profile.add_field(name="Joined at:",
                           value=f"{joined_at}",
                           inline=True)
-        profile.add_field(name='Glasses of Wine given:', value=f'{wine}')
         try:
+            profile.add_field(name='Glasses of Wine given:', value=f'{wine}')
             profile.add_field(name='Last Message sent (in channel):',
                               value=f'{last_message.content}')
         except:
