@@ -70,6 +70,7 @@ class AdminCommands:
                 e.add_field(name=f'{command_obj.name.title()}',
                             value=f'{command_obj.help}',
                             inline=False)
+                e.add_field(name='\u200b', value='\u200b')
         await msg.edit(embed=e)
 
     @commands.command(hidden=True)
@@ -90,6 +91,7 @@ class AdminCommands:
         profile = Embed(title=f"{usr.name}'s Profile",
                         color=usr.color)
         profile.set_thumbnail(url=usr.avatar_url_as(static_format='png', size=256))
+        profile.add_field(name='\u200b', value='\u200b')
         profile.add_field(name='Role:', value=f"{usr.top_role}")
         profile.add_field(name="Joined at:",
                           value=f"{joined_at}",
