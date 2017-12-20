@@ -75,8 +75,10 @@ class AdminCommands:
     @commands.command(hidden=True)
     async def ping(self, ctx):
         """ Tests self.bot Functionality """
-        re = f'Responded in {round(self.bot.latency, 2)} microseconds.'
-        e = Embed(title='Pong!', description=':ping_pong:!', color=discord.Color.green(), footer=re)
+        from BotClient import version
+        e = Embed(title='Pong!', description=':ping_pong:!', color=discord.Color.green())
+        e.add_field(name="Latency:", value=f"Responded in {round(self.bot.latency, 2)} microseconds.")
+        e.set_footer(text=f"Caseus Version {version}")
         await ctx.send(embed=e)
 
     @commands.command()
