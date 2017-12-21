@@ -1,11 +1,17 @@
-**__Caseus__**
+Caseus
+===================
 >_A Cheesy bot made for a private Discord Server_
 
-Caseus is a small scaled bot used for a private server I run...Not much else to say.
+Caseus is a small scaled bot used for a private server I run written in Discord.py...Not much else to say.
 
-- [X] Add on Error-Messages.
-- [X] Add on_message() reactions rather than on individual commands
-- [ ] Add Images to embed (If any)
-- [X] Rewrite...
-- [ ] Add VC/Music related stuff (If possible).
-- [X] Modify commands to use EmbGen function instead of crappy ol' bot.say()
+----------
+
+
+CheckList
+-------------- 
+- [X] Rewritten for Discord.py 1.0.0
+- [X] Error messages.
+- [ ] Support for Voice channels.
+- [X] Embeds.
+- [X] 24/7 Hosting.
+- [ ] Code evaluation
