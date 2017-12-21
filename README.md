@@ -1,4 +1,5 @@
 ![Caseus](https://cdn.discordapp.com/app-icons/369099294579359744/28023a5bff959999e67ea7faa22ee98c.png)
+===================
 Caseus
 ===================
 >_A Cheesy bot made for a private Discord Server_
