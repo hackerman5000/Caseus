@@ -64,6 +64,5 @@ if __name__ == '__main__':
                 discord.opus.load_opus(opus_lib)
             except OSError:
                 pass
-        print(f"Could not load an opus lib. Tried {opus_libs}")
 
 bot.run(bot_token)
