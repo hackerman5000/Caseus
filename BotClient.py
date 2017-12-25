@@ -57,13 +57,13 @@ if __name__ == '__main__':
         except Exception as e:
             print(f'Failed to load extension {extension}.')
     if discord.opus.is_loaded():
-      print("Opus is loaded...")
+        print("Opus is loaded...")
     else:
-      for opus_lib in ['libopus-0.x86.dll', 'libopus-0.x64.dll', 'libopus-0.dll','libopus.so.0', 'libopus.0.dylib']:
-        try:
-          discord.opus.load_opus(opus_lib)
-        except OSError:
-            pass
+        for opus_lib in ['libopus-0.x86.dll', 'libopus-0.x64.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']:
+            try:
+                discord.opus.load_opus(opus_lib)
+            except OSError:
+                pass
         print(f"Could not load an opus lib. Tried {opus_libs}")
 
 bot.run(bot_token)
