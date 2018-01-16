@@ -18,7 +18,8 @@ from WineRecords import main
 class AdminCommands:
     def __init__(self, bot):
         self.bot = bot
-
+        self._last_result = None
+    
     def cleanup_code(self, content):
         """Automatically removes code blocks from the code."""
         # remove ```py\n```
