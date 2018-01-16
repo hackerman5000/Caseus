@@ -8,6 +8,7 @@ import os
 from contextlib import redirect_stdout
 from time import sleep, strftime
 
+import traceback
 import discord
 import discord.ext.commands as commands
 from discord.embeds import Embed
