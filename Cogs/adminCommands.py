@@ -1,76 +1,85 @@
 """ Contains admin only commands, c#clear, c#ping .etc... """
-import os
 import asyncio
-import discord
-import inspect
-import discord.ext.commands as commands
-from WineRecords import main
-from discord.ext.commands import BucketType
-from discord.embeds import Embed
-from time import sleep, strftime
 import datetime
+import inspect
+import io
+import os
+from contextlib import redirect_stdout
+from time import sleep, strftime
+
+import discord
+import discord.ext.commands as commands
+from discord.embeds import Embed
+from discord.ext.commands import BucketType
+
+from WineRecords import main
+
 
 class AdminCommands:
     def __init__(self, bot):
         self.bot = bot
 
+    def cleanup_code(self, content):
+        """Automatically removes code blocks from the code."""
+        # remove ```py\n```
+        if content.startswith('```') and content.endswith('```'):
+            return '\n'.join(content.split('\n')[1:-1])
+
+        # remove `foo`
+        return content.strip('` \n')
+
     @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
     async def clear(self, ctx, number: int):
         """ Clears chat log 'n' messages."""
-        await ctx.channel.purge(limit=number+1)
+        await ctx.channel.purge(limit=number + 1)
 
-    @commands.command(hidden=True)
-    @commands.has_permissions(administrator=True)
-    async def debug(self, ctx, *, code: str):
-        """Evaluates code. [Credit to Rapptz/Danny]"""
-        code = code.strip('` ')
-        python = '```py\n{}\n```'
-        result = None
+    @commands.command(pass_context=True, hidden=True, name='eval')
+    async def _eval(self, ctx, *, body: str):
+        """Evaluates a code"""
 
         env = {
             'bot': self.bot,
             'ctx': ctx,
+            'channel': ctx.channel,
+            'author': ctx.author,
+            'guild': ctx.guild,
             'message': ctx.message,
-            'server': ctx.message.guild,
-            'channel': ctx.message.channel,
-            'author': ctx.message.author
+            '_': self._last_result
         }
 
         env.update(globals())
 
+        body = self.cleanup_code(body)
+        stdout = io.StringIO()
+
+        to_compile = f'async def func():\n{textwrap.indent(body, "  ")}'
+
         try:
-            result = eval(code, env)
-            if inspect.isawaitable(result):
-                result = await result
+            exec(to_compile, env)
         except Exception as e:
-            await ctx.send(embed=Embed(
-                title='Exception Raised...',
-                description=(python.format(type(e).__name__+":"+str(e))),
-                color=discord.Color.dark_red()
-            ))
-            return
+            return await ctx.send(f'```py\n{e.__class__.__name__}: {e}\n```')
+
+        func = env['func']
+        try:
+            with redirect_stdout(stdout):
+                ret = await func()
+        except Exception as e:
+            value = stdout.getvalue()
+            await ctx.send(f'```py\n{value}{traceback.format_exc()}\n```')
         else:
-            await ctx.send(embed=Embed(
-                title='Code Evaluated...',
-                description=result,
-                color=discord.Color.green()
-            ))
-            return
-        
-    @commands.cooldown(rate=1, per=150, type=BucketType.guild)
-    @commands.command()
-    async def help(self, ctx):
-        """ Shows this message. """
-        msg = await ctx.send(embed=Embed(title='Loading Help...', color=discord.Color.dark_magenta()))
-        e = Embed(title='Dunno who call? c#help!', color=discord.Color.magenta(),
-                  description='The prefix \'c#\' must be used before any command.')
-        for command_obj in self.bot.all_commands.values():
-            if not command_obj.hidden:
-                e.add_field(name=f'{command_obj.name.title()}',
-                            value=f'{command_obj.help}',
-                            inline=False)
-        await msg.edit(embed=e)
+            value = stdout.getvalue()
+            try:
+                await ctx.message.add_reaction('\u2705')
+            except:
+                pass
+
+            if ret is None:
+                if value:
+                    await ctx.send(f'```py\n{value}\n```')
+            else:
+                self._last_result = ret
+                await ctx.send(f'```py\n{value}{ret}\n```')
 
     @commands.command(hidden=True)
     async def ping(self, ctx):
@@ -86,7 +95,6 @@ class AdminCommands:
         """Gets a User's/Member's profile."""
         wine = main(usr.id)
         joined_at = usr.joined_at.strftime('%B-%d-%Y|%I:%M%p')
-        last_message = await ctx.channel.history().get(author__name=f'{usr.name}')
         profile = Embed(title=f"{usr.name}'s Profile",
                         color=usr.color)
         profile.set_thumbnail(url=usr.avatar_url_as(static_format='png', size=256))
@@ -96,7 +104,7 @@ class AdminCommands:
                           inline=True)
         profile.add_field(name='Glasses of Wine given:', value=f'{wine}')
         await ctx.send(embed=profile)
-    
+
     @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
     async def silence(self, ctx, usr: discord.Member, sec: int):
@@ -109,7 +117,7 @@ class AdminCommands:
         muted = discord.utils.get(ctx.message.guild.roles, name='Muted')
         await usr.add_roles(muted)
         await ctx.message.delete()
-        
+
         for role in usr_roles:
             await usr.remove_roles(role)
         await asyncio.sleep(sec)
@@ -121,6 +129,6 @@ class AdminCommands:
                                    description=f"Hope you've learnt your Lesson, {usr.mention}",
                                    color=discord.Color.gold()), delete_after=5)
 
- 
+
 def setup(bot):
     bot.add_cog(AdminCommands(bot))
