@@ -37,7 +37,7 @@ class AdminCommands:
         await ctx.channel.purge(limit=number + 1)
 
     @commands.command(hidden=True, name='eval')
-    @commands.check(is_owner)
+    @commands.is_owner()
     async def _eval(self, ctx, *, body: str):
         """Evaluates a code"""
 
