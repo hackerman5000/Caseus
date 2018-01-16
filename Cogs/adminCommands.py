@@ -36,7 +36,8 @@ class AdminCommands:
         """ Clears chat log 'n' messages."""
         await ctx.channel.purge(limit=number + 1)
 
-    @commands.command(pass_context=True, hidden=True, name='eval')
+    @commands.command(hidden=True, name='eval')
+    @commands.check(is_owner)
     async def _eval(self, ctx, *, body: str):
         """Evaluates a code"""
 
