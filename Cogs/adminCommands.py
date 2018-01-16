@@ -3,6 +3,7 @@ import asyncio
 import datetime
 import inspect
 import io
+import textwrap
 import os
 from contextlib import redirect_stdout
 from time import sleep, strftime
