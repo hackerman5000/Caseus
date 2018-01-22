@@ -85,6 +85,20 @@ class AdminCommands:
                 self._last_result = ret
                 await ctx.send(f'```py\n{value}{ret}\n```')
 
+    @commands.cooldown(rate=1, per=150, type=BucketType.guild)
+    @commands.command()
+    async def help(self, ctx):
+        """ Shows this message. """
+        msg = await ctx.send(embed=Embed(title='Loading Help...', color=discord.Color.dark_magenta()))
+        e = Embed(title='Dunno who call? c#help!', color=discord.Color.magenta(),
+                  description='The prefix \'c#\' must be used before any command.')
+        for command_obj in self.bot.all_commands.values():
+            if not command_obj.hidden:
+                e.add_field(name=f'{command_obj.name.title()}',
+                            value=f'{command_obj.help}',
+                            inline=False)
+        await msg.edit(embed=e)
+
     @commands.command(hidden=True)
     async def ping(self, ctx):
         """ Tests self.bot Functionality """
