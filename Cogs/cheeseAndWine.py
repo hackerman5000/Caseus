@@ -81,11 +81,11 @@ class CheeseAndWine:
             from WineRecords import WineRecords
             if user.id != ctx.author.id:
                 try:
-                    WineRecords[str(ctx.author.id)] += 1
+                    WineRecords[str(user.id)] += 1
                 except KeyError:
-                    WineRecords[str(ctx.author.id)] = 1
+                    WineRecords[str(user.id)] = 1
                 description = f"***{ctx.author.mention} has given {user.mention} a glass of :wine_glass:!***"
-                footer = f"*{ctx.author.mention} has been given {WineRecords[str(ctx.author.id)]} glasses of :wine_glass:!*"
+                footer = f"*{user.mention} has been given {WineRecords[str(user.id)]} glasses of :wine_glass:!*"
             else:
                 description = f"***{ctx.author.mention}, You can't just give :wine_glass: to yourself!***"
             await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red()))
