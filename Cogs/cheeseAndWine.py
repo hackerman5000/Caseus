@@ -85,10 +85,10 @@ class CheeseAndWine:
                 except KeyError:
                     WineRecords[str(ctx.author.id)] = 1
                 description = f"***{ctx.author.mention} has given {user.mention} a glass of :wine_glass:!***"
+                footer = f"*{ctx.author.mention} has been given {WineRecords[str(ctx.author.id)]} glasses of :wine_glass:!*"
             else:
                 description = f"***{ctx.author.mention}, You can't just give :wine_glass: to yourself!***"
-
-            footer = f"*{ctx.author.mention} has been given {WineRecords[str(ctx.author.id)]} glasses of :wine_glass:!*"
+                footer = "***After all, Greed is a sin***"
             await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red))
 
 
