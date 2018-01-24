@@ -83,8 +83,8 @@ class CheeseAndWine:
                 from WineRecords import main
                 description = f"***{ctx.author.mention} has given {user.mention} a glass of :wine_glass:!***"
                 footer = main(ctx)
-                return
-            description = f"***{ctx.author.mention}, You can't just give :wine_glass: to yourself!***"
+            else:
+                description = f"***{ctx.author.mention}, You can't just give :wine_glass: to yourself!***"
             await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red))
 
 
