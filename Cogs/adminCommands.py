@@ -14,9 +14,6 @@ import discord.ext.commands as commands
 from discord.embeds import Embed
 from discord.ext.commands import BucketType
 
-from WineRecords import main
-
-
 class AdminCommands:
     def __init__(self, bot):
         self.bot = bot
@@ -40,8 +37,8 @@ class AdminCommands:
     @commands.command(hidden=True)
     @commands.is_owner()
     async def DB(self, ctx):
-        from WineRecords import WineRecords as WR
-        await self.bot.get_user(self.bot.owner_id).send(WR)
+        from WineRecords import WineRecords
+        await self.bot.get_user(self.bot.owner_id).send(WineRecords)
 
     @commands.command(hidden=True, name='eval')
     @commands.is_owner()
