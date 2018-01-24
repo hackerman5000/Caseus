@@ -40,8 +40,8 @@ class AdminCommands:
     @commands.command(hidden=True)
     @commands.is_owner()
     async def DB(self, ctx):
-        from WineRecords import WineRecords
-        await self.bot.get_user(self.bot.owner_id).send(WineRecords)
+        from WineRecords import WineRecords as WR
+        await self.bot.get_user(self.bot.owner_id).send(WR)
 
     @commands.command(hidden=True, name='eval')
     @commands.is_owner()
