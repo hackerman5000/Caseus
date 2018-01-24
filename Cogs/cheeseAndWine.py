@@ -89,7 +89,7 @@ class CheeseAndWine:
             else:
                 description = f"***{ctx.author.mention}, You can't just give :wine_glass: to yourself!***"
                 footer = "***After all, Greed is a sin***"
-            await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red))
+            await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red()))
 
 
 def setup(bot):
