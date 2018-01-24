@@ -75,16 +75,20 @@ class CheeseAndWine:
     async def wine(self, ctx, user: discord.User):
         """ Give someone a nice (non-alcoholic) glass of wine. """
         footer = ""
-        
         if user.id == ctx.bot.user.id:
             description = f"*** Thanks for the :wine_glass:, {ctx.author.mention}***"
         else:
+            from WineRecords import WineRecords
             if user.id != ctx.author.id:
-                from WineRecords import main
+                try:
+                    WineRecords[str(ctx.author.id)] += 1
+                except KeyError:
+                    WineRecords[str(ctx.author.id)] = 1
                 description = f"***{ctx.author.mention} has given {user.mention} a glass of :wine_glass:!***"
-                footer = main(ctx)
             else:
                 description = f"***{ctx.author.mention}, You can't just give :wine_glass: to yourself!***"
+
+            footer = f"*{ctx.author.mention} has been given {WineRecords[str(ctx.author.id)]} glasses of :wine_glass:!*"
             await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red))
 
 
