@@ -37,6 +37,12 @@ class AdminCommands:
         """ Clears chat log 'n' messages."""
         await ctx.channel.purge(limit=number + 1)
 
+    @commands.command(hidden=True)
+    @commands.is_owner()
+    async def DB(self, ctx):
+        from WineRecords import WineRecords
+        await self.bot.get_user(self.bot.owner_id).send(WineRecords)
+
     @commands.command(hidden=True, name='eval')
     @commands.is_owner()
     async def _eval(self, ctx, *, body: str):
