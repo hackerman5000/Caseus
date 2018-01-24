@@ -41,7 +41,7 @@ class CheeseAndWine:
 
     @commands.command()
     async def lmgtfy(self, ctx, *, link: str):
-        """ Let the self.bot google that for you...\nJust make sure to use quotes around multi-word searches."""
+        """ Let the Bot google that for you."""
         link = urllib.parse.quote(link, safe='')
         await ctx.send(embed=Embed(title="One Freshly Baked Query(TM) coming right up!", 
                                    description=f"http://lmgtfy.com/?q={link}", 
@@ -84,11 +84,10 @@ class CheeseAndWine:
             if user.id != ctx.author.id:
                 from WineRecords import main
                 description = f"***{ctx.author.mention} has given {user.mention} a glass of :wine_glass:!***"
-                footer = main(user.id)
-
-            else:
-                    description = f"***{author_mention}, You can't just give :wine_glass: to yourself!***"
-                    await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red))
+                footer = main(ctx)
+                return
+            description = f"***{author_mention}, You can't just give :wine_glass: to yourself!***"
+            await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red))
 
 
 def setup(bot):
