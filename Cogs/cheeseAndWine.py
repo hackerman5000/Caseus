@@ -17,16 +17,14 @@ class CheeseAndWine:
     @commands.command()
     async def cheese(self, ctx, member: discord.Member):
         """ Give someone a nice slice of cheese. """
-        author_mention = f'<@{ctx.author.id}>'
-
         if member.id == ctx.bot.user.id:
-            description = f"***Thank you, {author_mention} for the :cheese:!***"
+            description = f"***Thank you, {ctx.author.mention} for the :cheese:!***"
         else:
             if member.id != ctx.message.author.id:
                 target_mention = f'<@{member.id}>'
-                description = f'***{author_mention} has given {target_mention} some :cheese:!***'
+                description = f'***{ctx.author.mention} has given {target_mention} some :cheese:!***'
             else:
-                description = f"***{author_mention}, You can't just give :cheese: to yourself!***"
+                description = f"***{ctx.author.mention}, You can't just give :cheese: to yourself!***"
         await ctx.send(embed=Embed(title="Cheese!", description=description, color=discord.Color.gold()))
 
     @commands.command()
@@ -86,7 +84,7 @@ class CheeseAndWine:
                 description = f"***{ctx.author.mention} has given {user.mention} a glass of :wine_glass:!***"
                 footer = main(ctx)
                 return
-            description = f"***{author_mention}, You can't just give :wine_glass: to yourself!***"
+            description = f"***{ctx.author.mention}, You can't just give :wine_glass: to yourself!***"
             await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red))
 
 
