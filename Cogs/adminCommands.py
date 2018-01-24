@@ -114,7 +114,11 @@ class AdminCommands:
     @commands.command()
     async def profile(self, ctx, usr: discord.Member):
         """Gets a User's/Member's profile."""
-        wine = main(usr.id)
+        from WineRecords import WineRecords
+        try:
+            wine = WineRecords[str(usr.id)]
+        except KeyError:
+            wine = 0
         joined_at = usr.joined_at.strftime('%B-%d-%Y|%I:%M%p')
         profile = Embed(title=f"{usr.name}'s Profile",
                         color=usr.color)
