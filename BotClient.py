@@ -38,9 +38,10 @@ async def on_ready():
 async def on_command_error(ctx, error):
     """ Runs this block on Errors. """
     print(f"Error raised by {ctx.author.name}[{ctx.guild.name}] using {ctx.message.content}")
+    print(str(error))
     await ctx.send(embed=discord.Embed(
         title="An Error has occured...",
-        description=f"***{str(error).title()}***",
+        description=f"***{str(error)}***",
         color=discord.Color.red()))
 
 
