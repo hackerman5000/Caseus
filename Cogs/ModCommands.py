@@ -18,17 +18,17 @@ from discord.ext.commands import BucketType
 class ModCommands:
     ''' Contains commands to be used on Members of a guild by the 'staff'. '''
 
-    ######################
+    #######################################
     #           Dunder Methods            #
-    ######################
+    #######################################
 
     def __init__(self, caseus: commands.bot):
         '''Stuff'''
         self.caseus = caseus
 
-    ######################
+    #########################################
     #              Commands                 #
-    ######################
+    #########################################
 
     @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
