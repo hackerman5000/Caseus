@@ -17,17 +17,17 @@ from discord.ext.commands import BucketType
 class AgCommands:
         '''Contains commands that *should* only be used by the owner of the bot'''
 
-        ######################
+        #######################################
         #           Dunder Methods            #
-        ######################
+        #######################################
 
         def __init__(self, caseus: commands.bot):
             '''Stuff'''
             self.caseus = caseus
 
-        ######################
+        ##########################################
         #           Static Methods               #
-        ######################
+        ##########################################
 
         @staticmethod
         def CleanupCode(content: str) -> str:
@@ -39,9 +39,9 @@ class AgCommands:
             # Remove `foo`
             return content.strip('` \n')
 
-            ######################
+            #########################################
             #              Commands                 #
-            ######################
+            #########################################
 
             @commands.command(hidden=True)
             @commands.is_owner()
