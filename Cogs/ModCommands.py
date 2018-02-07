@@ -95,5 +95,5 @@ class ModCommands:
                                    description=f"Hope you've learnt your Lesson, {usr.mention}",
                                    color=discord.Color.gold()), delete_after=5)
 
-
-setup = lambda cas: cas.add_cog(ModCommands(cas))
+def setup(bot):
+        bot.add_cog(ModCommands(bot))
