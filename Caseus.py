@@ -13,9 +13,9 @@ import discord
 from discord import Embed
 from discord.ext import commands
 
-######################
+########################################
 #         Enviromental Vars            #
-######################
+########################################
 
 
 PREFIX: str = os.getenv('PREFIX')
@@ -31,9 +31,9 @@ Caseus = commands.bot(
 Caseus.remove_command('help')
 
 
-######################
-# -- Events and Error Handlng --#
-######################
+#################################
+#  --Events and Error Handlng-- #
+#################################
 
 
 @Caseus.event
