@@ -15,7 +15,7 @@ from discord.ext import commands
 #         Enviromental Vars            #
 ########################################
 
-
+Extensions = ['Cogs.AgCommands', 'Cogs.MiscCommands', 'Cogs.ModCommands']
 PREFIX = os.getenv('PREFIX')
 VERSION = os.getenv('HEROKU_RELEASE_VERSION')
 TOKEN = os.getenv('BOT_TOKEN')
@@ -61,13 +61,12 @@ async def BeforeInvoke(ctx):
     await ctx.message.add_reaction(u"\U0001F9C0")
     print(f"{ctx.author.name}[{ctx.guild.name}] invoked the command {ctx.message.content}.")
 
-if __name__ == '__main__':
-    Extensions = ['Cogs.AgCommands', 'Cogs.MiscCommands', 'Cogs.ModCommands']
+if __name__ == "__main__":
     for extension in Extensions:
         try:
-                bot.load_extension(extension)
+            Caseus.load_extension(extension)
         except Exception as e:
-                print(f'Failed to load extension {cog}.')
-                print(f"Exception:\n{str(e)}")
+            exc = '{}: {}'.format(type(e).__name__, e)
+            print('Failed to load extension {}\n{}'.format(extension, exc))
 
 Caseus.run(TOKEN)
