@@ -10,17 +10,17 @@ from discord import Embed
 class MiscCommands:
     '''Contains Misc commands.'''
 
-    ######################
+    #######################################
     #           Dunder Methods            #
-    ######################
+    #######################################
 
     def __init__(self, caseus: commands.bot):
         '''Stuff'''
         self.caseus = caseus
 
-    ######################
+    #########################################
     #               Commands                #
-    ######################
+    #########################################
 
     @commands.command()
     async def cheese(self, ctx, member: discord.Member):
