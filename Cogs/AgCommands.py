@@ -21,9 +21,9 @@ class AgCommands:
         #           Dunder Methods            #
         #######################################
 
-        def __init__(self, caseus: commands.bot):
+        def __init__(self, cas):
             '''Stuff'''
-            self.caseus = caseus
+            self.cas = cas
 
         ##########################################
         #           Static Methods               #
@@ -97,6 +97,5 @@ class AgCommands:
                     e.add_field(name="Latency:", value=f"Responded in {round(self.bot.latency, 2)} microseconds.")
                     await ctx.send(embed=e)
 
-
-def setup(bot):
-        bot.add_cog(AgCommands(bot))
+def setup(cas):
+        cas.add_cog(AgCommands(cas))
