@@ -3,90 +3,38 @@ import asyncio
 import datetime
 import inspect
 import io
-import textwrap
 import os
+import textwrap
+import traceback
 from contextlib import redirect_stdout
 from time import sleep, strftime
 
-import traceback
 import discord
 import discord.ext.commands as commands
 from discord.embeds import Embed
 from discord.ext.commands import BucketType
 
-class AdminCommands:
-    def __init__(self, bot):
-        self.bot = bot
-        self._last_result = None
-    
-    def cleanup_code(self, content):
-        """Automatically removes code blocks from the code."""
-        # remove ```py\n```
-        if content.startswith('```') and content.endswith('```'):
-            return '\n'.join(content.split('\n')[1:-1])
 
-        # remove `foo`
-        return content.strip('` \n')
+class ModCommands:
+    ''' Contains commands to be used on Members of a guild by the 'staff'. '''
+
+    ######################
+    #           Dunder Methods            #
+    ######################
+
+    def __init__(self, caseus: commands.bot):
+        '''Stuff'''
+        self.caseus = caseus
+
+    ######################
+    #              Commands                 #
+    ######################
 
     @commands.command(hidden=True)
     @commands.has_permissions(administrator=True)
     async def clear(self, ctx, number: int):
-        """ Clears chat log 'n' messages."""
+        """ Clears 'n' messages from current channel. """
         await ctx.channel.purge(limit=number + 1)
-
-    @commands.command(hidden=True)
-    @commands.is_owner()
-    async def DB(self, ctx):
-        from WineRecords import WineRecords
-        await self.bot.get_user(self.bot.owner_id).send(WineRecords)
-
-    @commands.command(hidden=True, name='eval')
-    @commands.is_owner()
-    async def _eval(self, ctx, *, body: str):
-        """Evaluates a code"""
-
-        env = {
-            'bot': self.bot,
-            'ctx': ctx,
-            'channel': ctx.channel,
-            'author': ctx.author,
-            'guild': ctx.guild,
-            'message': ctx.message,
-            '_': self._last_result
-        }
-
-        env.update(globals())
-
-        body = self.cleanup_code(body)
-        stdout = io.StringIO()
-
-        to_compile = f'async def func():\n{textwrap.indent(body, "  ")}'
-
-        try:
-            exec(to_compile, env)
-        except Exception as e:
-            return await ctx.send(f'```py\n{e.__class__.__name__}: {e}\n```')
-
-        func = env['func']
-        try:
-            with redirect_stdout(stdout):
-                ret = await func()
-        except Exception as e:
-            value = stdout.getvalue()
-            await ctx.send(f'```py\n{value}{traceback.format_exc()}\n```')
-        else:
-            value = stdout.getvalue()
-            try:
-                await ctx.message.add_reaction('\u2705')
-            except:
-                pass
-
-            if ret is None:
-                if value:
-                    await ctx.send(f'```py\n{value}\n```')
-            else:
-                self._last_result = ret
-                await ctx.send(f'```py\n{value}{ret}\n```')
 
     @commands.cooldown(rate=1, per=150, type=BucketType.guild)
     @commands.command()
@@ -95,25 +43,18 @@ class AdminCommands:
         msg = await ctx.send(embed=Embed(title='Loading Help...', color=discord.Color.dark_magenta()))
         e = Embed(title='Dunno who call? c#help!', color=discord.Color.magenta(),
                   description='The prefix \'c#\' must be used before any command.')
+
         for command_obj in self.bot.all_commands.values():
             if not command_obj.hidden:
                 e.add_field(name=f'{command_obj.name.title()}',
                             value=f'{command_obj.help}',
-                            inline=False)
+                            inline=False
+                            )
         await msg.edit(embed=e)
-
-    @commands.command(hidden=True)
-    async def ping(self, ctx):
-        """ Tests self.bot Functionality """
-        version = os.getenv('HEROKU_RELEASE_VERSION')
-        e = Embed(title='Pong!', description=':ping_pong:!', color=discord.Color.green())
-        e.add_field(name="Latency:", value=f"Responded in {round(self.bot.latency, 2)} microseconds.")
-        e.set_footer(text=f"Caseus Version {version}")
-        await ctx.send(embed=e)
 
     @commands.command()
     async def profile(self, ctx, usr: discord.Member):
-        """Gets a User's/Member's profile."""
+        """ Gets a Member's profile. """
         from WineRecords import WineRecords
         try:
             wine = WineRecords[str(usr.id)]
@@ -155,5 +96,4 @@ class AdminCommands:
                                    color=discord.Color.gold()), delete_after=5)
 
 
-def setup(bot):
-    bot.add_cog(AdminCommands(bot))
+setup = lambda cas: cas.add_cog(ModCommands(cas))
