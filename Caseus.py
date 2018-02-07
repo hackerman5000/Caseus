@@ -7,8 +7,6 @@ It also handles:
 
 """
 import os
-from glob import glob
-
 import discord
 from discord import Embed
 from discord.ext import commands
@@ -64,10 +62,13 @@ async def BeforeInvoke(ctx):
     print(f"{ctx.author.name}[{ctx.guild.name}] invoked the command {ctx.message.content}.")
 
 if __name__ == '__main__':
-    os.chdir('Cogs')
-    for cog in glob("*.py"):
+    Extensions = []
+    for file in os.listdir("Cogs"):
+                if file.endswith(".py"):
+                        Extensions.append(f"Cogs.{file.replace('.py', '')}"
+    for cog in Extensions:
         try:
-            Caseus.load_extension(f"Cogs.{cog.replace('.py', '')}")
+            Caseus.load_extension(cog)
         except Exception as e:
             print(f'Failed to load extension {cog}.')
             print(f"Exception:\n{str(e)}")
