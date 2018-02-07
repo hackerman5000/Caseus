@@ -62,11 +62,7 @@ async def BeforeInvoke(ctx):
     print(f"{ctx.author.name}[{ctx.guild.name}] invoked the command {ctx.message.content}.")
 
 if __name__ == '__main__':
-    Extensions = []
-    for file in os.listdir("Cogs"):
-                if file.endswith(".py"):
-                        Extensions.append(f"Cogs.{file.replace('.py', '')}")
-
+    Extensions = ['Cogs.AgCommands', 'MiscCommands', 'ModCommands']
     for cog in Extensions:
         try:
             Caseus.load_extension(cog)
