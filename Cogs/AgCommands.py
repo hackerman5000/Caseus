@@ -98,4 +98,5 @@ class AgCommands:
                     await ctx.send(embed=e)
 
 
-setup = lambda cas: cas.add_cog(AgCommands(cas))
+def setup(bot):
+        bot.add_cog(AgCommands(bot))
