@@ -23,7 +23,7 @@ VERSION = os.getenv('HEROKU_RELEASE_VERSION')
 TOKEN = os.getenv('BOT_TOKEN')
 OWNER_ID = os.getenv('OWNER_ID')
 
-Caseus = commands.bot(
+Caseus = commands.Bot(
     command_prefix=PREFIX,
     pm_help=None,
     owner_id=OWNER_ID
