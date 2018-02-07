@@ -65,7 +65,8 @@ if __name__ == '__main__':
     Extensions = []
     for file in os.listdir("Cogs"):
                 if file.endswith(".py"):
-                        Extensions.append(f"Cogs.{file.replace('.py', '')}"
+                        Extensions.append(f"Cogs.{file.replace('.py', '')}")
+
     for cog in Extensions:
         try:
             Caseus.load_extension(cog)
