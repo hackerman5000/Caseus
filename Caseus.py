@@ -18,10 +18,10 @@ from discord.ext import commands
 ########################################
 
 
-PREFIX: str = os.getenv('PREFIX')
-VERSION: str = os.getenv('HEROKU_RELEASE_VERSION')
-TOKEN: str = os.getenv('BOT_TOKEN')
-OWNER_ID: int = os.getenv('OWNER_ID')
+PREFIX = os.getenv('PREFIX')
+VERSION = os.getenv('HEROKU_RELEASE_VERSION')
+TOKEN = os.getenv('BOT_TOKEN')
+OWNER_ID = os.getenv('OWNER_ID')
 
 Caseus = commands.bot(
     command_prefix=PREFIX,
