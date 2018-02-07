@@ -67,7 +67,7 @@ if __name__ == '__main__':
     os.chdir('Cogs')
     for cog in glob("*.py"):
         try:
-            Caseus.load_extension(cog)
+            Caseus.load_extension(f"Cogs.{cog.replace('py', '')}")
         except Exception as e:
             print(f'Failed to load extension {cog}.')
             print(f"Exception:\n{str(e)}")
