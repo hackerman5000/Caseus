@@ -39,9 +39,9 @@ Caseus.remove_command('help')
 @Caseus.event
 async def on_ready():
     """ On Startup, The Caseus prints the following to the console. """
-    global version
+    global VERSION
     print("Name: {}".format(Caseus.user.name))
-    print("Version: {}".format(version))
+    print("Version: {}".format(VERSION))
     print("ID: {}".format(Caseus.user.id))
     await Caseus.change_presence(game=discord.Game(name="Grating Cheese(c#help)"))
 
