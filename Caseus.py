@@ -62,12 +62,12 @@ async def BeforeInvoke(ctx):
     print(f"{ctx.author.name}[{ctx.guild.name}] invoked the command {ctx.message.content}.")
 
 if __name__ == '__main__':
-    Extensions = ['Cogs.AgCommands', 'MiscCommands', 'ModCommands']
-    for cog in Extensions:
+    Extensions = ['Cogs.AgCommands', 'Cogs.MiscCommands', 'Cogs.ModCommands']
+    for extension in Extensions:
         try:
-            Caseus.load_extension(cog)
+                bot.load_extension(extension)
         except Exception as e:
-            print(f'Failed to load extension {cog}.')
-            print(f"Exception:\n{str(e)}")
+                print(f'Failed to load extension {cog}.')
+                print(f"Exception:\n{str(e)}")
 
 Caseus.run(TOKEN)
