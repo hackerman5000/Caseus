@@ -14,7 +14,7 @@ class MiscCommands:
     #           Dunder Methods            #
     #######################################
 
-    def __init__(self, caseus: commands.bot):
+    def __init__(self, caseus):
         '''Stuff'''
         self.caseus = caseus
 
@@ -95,7 +95,7 @@ class MiscCommands:
                 footer = f"*{user.mention} has been given {WineRecords[str(user.id)]} glasses of :wine_glass:!*"
             else:
                 description = f"***{ctx.author.mention}, You can't just give :wine_glass: to yourself!***"
-            await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red()))
+            await ctx.send(embed=discord.Embed(description=f'{description}\n{footer}', color=discord.Color.dark_red() ))
 
-
-setup = lambda cas: cas.add_cog(MiscCommands(cas))
+def setup(cas):
+    cas.add_cog(MiscCommands(cas))
