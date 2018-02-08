@@ -44,7 +44,7 @@ class ModCommands:
         e = Embed(title='Dunno who call? c#help!', color=discord.Color.magenta(),
                   description='The prefix \'c#\' must be used before any command.')
 
-        for command_obj in self.bot.all_commands.values():
+        for command_obj in self.caseus.all_commands.values():
             if not command_obj.hidden:
                 e.add_field(name=f'{command_obj.name.title()}',
                             value=f'{command_obj.help}',
