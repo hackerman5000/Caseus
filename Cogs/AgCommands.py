@@ -97,5 +97,5 @@ class AgCommands:
             e.add_field(name="Latency:", value=f"Responded in {round(self.bot.latency, 2)} microseconds.")
             await ctx.send(embed=e)
 
-def setup(cas):
-        cas.add_cog(AgCommands(cas))
+def setup(bot):
+        bot.add_cog(AgCommands(bot))
