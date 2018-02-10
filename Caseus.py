@@ -19,7 +19,7 @@ Extensions = ['Cogs.AgCommands', 'Cogs.MiscCommands', 'Cogs.ModCommands']
 PREFIX = os.getenv('PREFIX')
 VERSION = os.getenv('HEROKU_RELEASE_VERSION')
 TOKEN = os.getenv('BOT_TOKEN')
-OWNER_ID = os.getenv('OWNER_ID')
+OWNER_ID = int(os.getenv('OWNER_ID'))
 
 Caseus = commands.Bot(
     command_prefix=PREFIX,
