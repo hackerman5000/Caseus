@@ -55,7 +55,7 @@ class AgCommands:
         async def debug(self, ctx, *, body: str):
             '''Evaluates a chunk of code.'''
             env = {
-            'bot': self.caseus,
+            'cas': self.cas,
             'ctx': ctx,
             }.update(globals())
 
@@ -90,11 +90,11 @@ class AgCommands:
 
         @commands.command(hidden=True)
         async def ping(self, ctx):
-            """ Tests self.bot Functionality """
+            """ Tests Functionality """
             VERSION = os.getenv('HEROKU_RELEASE_VERSION')
             e = Embed(title='Pong!', description=':ping_pong:!', color=discord.Color.green())
             e.set_footer(text=f"Caseus Version {VERSION}")
-            e.add_field(name="Latency:", value=f"Responded in {round(self.bot.latency, 2)} microseconds.")
+            e.add_field(name="Latency:", value=f"Responded in {round(self.cas.latency, 2)} microseconds.")
             await ctx.send(embed=e)
 
 def setup(bot):
